@@ -1,0 +1,118 @@
+html {
+    margin: 0px;
+    height: 100%;
+    width: 100%;
+    padding:0;
+}
+
+body {
+    background-size: cover;
+    font-family: helvetica, arial, sans-serif;
+    font-size: 100%;
+    padding: 0;
+    margin:0;
+    text-align: center;
+    height: auto;
+    width: auto;
+
+}
+
+a {
+    text-decoration: none;
+}
+
+#index{
+    margin:auto;
+    text-align:center;
+    margin-top:50px;
+}
+
+#index h1{
+    margin-bottom: 5%;
+}
+
+#index h3 {
+        margin-bottom: 5%;
+    }
+
+#index button {
+    background-color: #000000; 
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+#studentButton {
+    margin-left: 0;
+}
+
+#indexButton {
+    margin-left: 5%;
+}
+
+#header {
+    width: 100%;
+    height: 100px;
+    background-color: #000000;
+    color:#ffffff;  
+}
+
+#headerText {
+    display: inline-block;
+    width: 50%;
+    height:100px;
+}
+
+#headerText h1{
+
+    text-align:left;
+    
+}
+
+#headerButton {
+    width: 30%;
+    display: inline-block;
+}
+
+#headerButton button {
+        background-color: #ffffff;
+        border: none;
+        color:black;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+    }
+
+#aboutBody{
+    width:70%;
+    margin:auto;
+}
+
+#aboutBody h4{
+    line-height:30px;
+}
+
+    #aboutBody h1 {
+        margin-top: 80px;
+    }
+
+#teamContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-row-gap:30px;
+}
+    #teamContainer img{
+        height:200px;
+        width:200px;   
+        margin-right:-100px;
+    }
+    #person{
+        text-align:left;
+    }
+
