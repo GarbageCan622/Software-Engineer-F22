@@ -89,9 +89,9 @@ a {
         font-size: 16px;
     }
 
-#aboutBody{
-    width:70%;
-    margin:auto;
+#aboutBody {
+    width: 70%;
+    margin: auto;
 }
 
 #aboutBody h4{
@@ -106,6 +106,8 @@ a {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-row-gap:30px;
+    padding-bottom:50px;
+
 }
     #teamContainer img{
         height:200px;
