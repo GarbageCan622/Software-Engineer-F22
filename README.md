@@ -12,8 +12,8 @@ Student (see data dictionary for further info)
 
 *** figure out how make it part of prototype *** —> LOOK AT IT
 
-- Student ID attribute (int)
+- Student ID attribute (int) (WIP)
 - Adjust self scaling function
-- GPA grade calc function
-- Mock grade function
-- Calc from letter grade (CfLG)/calc grade needed for letter grade (CGNfLG) (enter letter, returns grade needed to get that letter) (One for category and one for assignment)
+- GPA grade calc function (WIP)
+- Mock grade function (WIP)
+- Calc from letter grade (CfLG) (enter letter, returns grade needed to get that letter) (One for category and one for assignment) (WIP)
