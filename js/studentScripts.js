@@ -178,3 +178,6 @@ unweightedButton.addEventListener("click", unweightedButtonSelected);
 weightedButton.classList.add('selectedWeightButton');
 unweightedButton.classList.add('unselectedWeightButton');
 
+
+const cat = localStorage.getItem('myCat');
+console.log(cat);
