@@ -145,6 +145,7 @@ a {
     grid-template-columns: 1fr 1fr;
 }
 
+
     #assignGrades>div:nth-child(6n),
     #assignGrades>div:nth-child(6n -1)
     {
@@ -281,4 +282,12 @@ a {
 
 .editGrades{
     margin-right: 10px;
+}
+
+.hidden{
+    display:none;
+}
+
+.notHidden{
+    display:block;
 }

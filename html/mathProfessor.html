@@ -22,15 +22,20 @@
             <div class="textRight"><h3>83.2% : B-</h3></div>
         </div>
         <div id="assignGrades">
-<!--assignGrades is a grid container, this grid has a width of two so there is a left and a right, the grid looks at divs so I labelled them leftText and rightText-->
+            <!--assignGrades is a grid container, this grid has a width of two so there is a left and a right, the grid looks at divs so I labelled them leftText and rightText-->
             <div class="textLeft">Homework 1</div>
             <div class="textRight">
                 <button type="button" id="hw1" class="editGrades">Edit grades </button>
             </div>
             <div class="textLeft">Type: Homework</div>
             <div class="textRight">Due: 11/16/2022</div>
-            <div class="textLeft" id="studentNamesHw1"></div><!--2 blank divs so the grid doesnt get messed up, names on the left and grades on the right-->
-            <div class="textRight" id="hw1Grades"></div>
+            <div class="textLeft hidden" id="studentNamesHw1">
+                <p>Stavros Halkias<br />Tony Soprano<br />Saul Goodman</p>
+            </div><!--2 blank divs so the grid doesnt get messed up, names on the left and grades on the right-->
+            <div class="textRight hidden" id="hw1Grades">
+                <br /><input type="text" class="gradeNumerator" value="20">/30<br /><input type="text" class="gradeNumerator" value="20">/30<br /><input type="text" class="gradeNumerator" value="20">/30<br />
+                <button type="button" id="hw1SaveChanges" class="saveChanges">Save changes </button>
+            </div>
 
             <div class="textLeft">Quiz 1</div>
             <div class="textRight">
@@ -38,11 +43,13 @@
             </div>
             <div class="textLeft">Type: Quiz</div>
             <div class="textRight">Due: 11/16/2022</div>
-            <div class="textLeft" id="studentNamesQ1"></div>
-            <div class="textRight" id="q1Grades"></div>
-
-
-
+            <div class="textLeft hidden" id="studentNamesQ1">
+                <p>Stavros Halkias<br />Tony Soprano<br />Saul Goodman</p>
+            </div>
+            <div class="textRight hidden" id="q1Grades">
+                <br /><input type="text" class="gradeNumerator" value="-">/100<br /><input type="text" class="gradeNumerator" value="-">/100<br /><input type="text" class="gradeNumerator" value="-">/100<br />
+                <button type="button" class="saveChanges">Save changes </button>
+            </div>
         </div>
     </div>
     <div id="menu">
@@ -74,9 +81,9 @@
         </div>
 
     </div>       
-
+        <script src="../js/jquery-1.11.0.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="../js/professorScripts.js"></script>
+        <script src="../js/mathProfessorScripts.js"></script>
 
 
 </body>
