@@ -1,6 +1,4 @@
 let studentNames = ['Stavros Halkias', 'Tony Soprano', 'Saul Goodman'];
-const pointTotal = new Map();
-pointTotal.set('Homework1', '30');
 //this is connected to the edit grades button on Homework 1, currently every edit grades button has corresponding javascipt to expand the menu
 let studentNamesHw1 = document.getElementById('studentNamesHw1'); //student names is in its own div so that they are displayed on the left
 //homework 1
@@ -143,11 +141,8 @@ categoriesText.addEventListener("click", expandCategories);
 
 
 
-localStorage.setItem('myCat', 'Tom');
 
-const cat = localStorage.getItem('myCat');
 
-console.log(cat);
 
 $(function () {
     
