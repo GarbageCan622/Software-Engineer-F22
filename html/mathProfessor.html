@@ -58,7 +58,7 @@
     <div id="menu">
         <!--large div which is the menu on the right-->
         <div id="studentViewDiv" class="menuItem">
-            <a href="mathStudent.html">
+            <a href="studentPreview.html">
                 <button type="button" id="studentViewText" class="menuButton">Enter Student Preview </button>
             </a>
         </div>
@@ -69,7 +69,23 @@
         </div>
         <div id="adjustLetterScalingDiv" class="menuItem">
             <div><button type="button" id="adjustLetterScalingText" class="menuButton">Adjust letter scaling </button></div>
-            <div id="adjustLetterScalingMenu"></div>
+            <div id="adjustLetterScalingMenu">
+				<div class="textLeft" id="letters">
+				<p>
+					A<br />
+					B<br />
+					C<br />
+					D<br />
+				</p>
+				</div><!--2 blank divs so the grid doesnt get messed up, names on the left and grades on the right-->
+				<div class="textRight">
+					<br /><input id="A_break" type="text" class="gradeNumerator" value="90">
+					<br /><input id="B_break" type="text" class="gradeNumerator" value="80">
+					<br /><input id="C_break" type="text" class="gradeNumerator" value="70">
+					<br /><input id="D_break" type="text" class="gradeNumerator" value="60"><br />
+					<button type="button" id="" class="saveChanges">Save changes </button>
+				</div>
+			</div>
         </div>
         <div id="categoriesDiv" class="menuItem">
             <div><button type="button" id="categoriesText" class="menuButton">Adjust assignment categories </button></div>
