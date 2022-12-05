@@ -178,6 +178,18 @@ unweightedButton.addEventListener("click", unweightedButtonSelected);
 weightedButton.classList.add('selectedWeightButton');
 unweightedButton.classList.add('unselectedWeightButton');
 
+if (document.getElementById('MHomework1') != null) { //check if id is on this page, really we are checking if we are in mathStudent or englishStudent. If the id is on the page grab the value of the assignment stored in the localStorage and use that as the value
+    document.getElementById('MHomework1').value = localStorage.getItem('MHomework1');
+}
 
-const cat = localStorage.getItem('myCat');
-console.log(cat);
+if (document.getElementById('MQuiz1') != null) {
+    document.getElementById('MQuiz1').value = localStorage.getItem('MQuiz1');
+}
+
+if (document.getElementById('EHomework1') != null) {
+    document.getElementById('EHomework1').value = localStorage.getItem('EHomework1');
+}
+
+if (document.getElementById('EQuiz1') != null) {
+    document.getElementById('EQuiz1').value = localStorage.getItem('EQuiz1');
+}
