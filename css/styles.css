@@ -189,6 +189,10 @@ a {
     border-bottom:2px solid black;
 }
 
+#mailto_field{
+    text-align: center;
+}
+
 .menuButton {
     background-color: lightgray;
     border: none;

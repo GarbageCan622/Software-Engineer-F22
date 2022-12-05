@@ -52,10 +52,16 @@ const category_grades = [homework_grades, quiz_grades, exam_grades];
 
 
 //overall_grade Functions
-function calc_statistics() {
-    return [mean(), median(), standard_deviation(), max(), min()];
+classStatisticsText.addEventListener("click", calc_statistics);
+
+function calc_statistics() {	//this function calls the 5 helper files, and handles the email's to and body fields
+   	let output = [mean(), median(), standard_deviation(), max(), min()];
+	let toString = 	"Mean: " + output[0] + "%0D%0A" + "Median: " + output[1] + "%0D%0A" + 
+			"Standard Deviation: " + output[2] + "%0D%0A" + "Max: " + output[3] + "%0D%0A" + "Min: " + output[4] + "%0D%0A"; 
+	document.getElementById("mailto_field").href = "mailto:" + document.getElementById("mailto_email").value + "?body=" + toString;
 }   
-function mean() {
+
+function mean() {	//This and the other 4 helper fils use the local attributes defined above in this file
     sum = 0;
     for (let i = 0; i < student_ids.length; i++) {
         sum += overall_grades.get(student_ids[i]);

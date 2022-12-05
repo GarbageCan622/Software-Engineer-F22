@@ -27,7 +27,7 @@
 <!--assignGrades is a grid container, this grid has a width of two so there is a left and a right, the grid looks at divs so I labelled them leftText and rightText-->
             <div class="textLeft">Homework 1</div>
             <div class="textRight">
-                <button type="button" id="hw1" class="editGrades">Edit grades </button>
+                <button type="button" id="hw1" class="editGrades">View Grades </button>
             </div>
             <div class="textLeft">Type: Homework</div>
             <div class="textRight">Due: 11/16/2022</div>
@@ -36,7 +36,7 @@
 
             <div class="textLeft">Quiz 1</div>
             <div class="textRight">
-                <button type="button" id="q1" class="editGrades">Edit grades </button>
+                <button type="button" id="q1" class="editGrades">View Grades </button>
             </div>
             <div class="textLeft">Type: Quiz</div>
             <div class="textRight">Due: 11/16/2022</div>
@@ -49,17 +49,15 @@
     </div>
     <div id="menu">
         <!--large div which is the menu on the right-->
-        <div id="viewStudentGradesDiv" class="menuItem">
-            <div><button type="button" id="viewStudentGradesText" class="menuButton">View student grades </button></div>
-            <div id="viewStudentGradesMenu"></div>
-        </div>
         <div id="studentViewDiv" class="menuItem">
             <a href="mathStudent.html">
                 <button type="button" id="studentViewText" class="menuButton">See student view </button>
             </a>
         </div>
         <div id="classStatisticsDiv" class="menuItem">
-            <div><button type="button" id="classStatisticsText" class="menuButton">Publish class statistics </button></div>
+            <a id="mailto_field" href=""><button type="button" id="classStatisticsText" class="menuButton" href="">Publish class statistics </button></a>
+            <div> Enter your email: <input id="mailto_email" type="text"/></div>
+            <div>(Full implementation would send statistics to Blackboard mail list)</div>
         </div>
         <div id="adjustLetterScalingDiv" class="menuItem">
             <div><button type="button" id="adjustLetterScalingText" class="menuButton">Adjust letter scaling </button></div>
