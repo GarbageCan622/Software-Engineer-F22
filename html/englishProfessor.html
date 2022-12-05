@@ -3,10 +3,10 @@
     <title>Gradebook Skeleton</title>
     <link rel="stylesheet" href="../css/styles.css" />
 </head>
-<body>
+<body onload="calc_overall(); to_letter_grade(80)">
     <div id="header">
         <div id="headerText">
-            <h1>English</h1>
+            <h1>ENGL 1010</h1>
         </div>
         <div id="headerButton">
             <a href="professor.html">
@@ -19,7 +19,9 @@
             <h2><u>Published Assignments</u></h2>
             <div id="blank"></div>
             <div class="textLeft"><h3>Class average:</h3></div>
-            <div class="textRight"><h3>83.2% : B-</h3></div>
+            <div class="textRight">
+                <h3><span id="class_avg_text"></span> : <span id="class_letter_text"></span></h3>
+            </div>
         </div>
         <div id="assignGrades">
 <!--assignGrades is a grid container, this grid has a width of two so there is a left and a right, the grid looks at divs so I labelled them leftText and rightText-->
@@ -47,11 +49,6 @@
     </div>
     <div id="menu">
         <!--large div which is the menu on the right-->
-        <div id="addAssingnDiv" class="menuItem">
-            <!--menu works in blocks, so each div labeled "x-div" is another block-->
-            <div><button type="button" id="addAssignText" class="menuButton">Add assignment </button></div>
-            <div id="addAssignMenu"></div>
-        </div>
         <div id="viewStudentGradesDiv" class="menuItem">
             <div><button type="button" id="viewStudentGradesText" class="menuButton">View student grades </button></div>
             <div id="viewStudentGradesMenu"></div>
@@ -77,6 +74,7 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="../js/professorScripts.js"></script>
+        <script src="../js/course.js"></script>
 
 
 </body>

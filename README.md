@@ -1,3 +1,3 @@
-# Software-Engineering-F22
-Cool place for cool people
-hello
+Currently have working implementaion of calulate_statistics and its helper functions (mean, median, std_dev, min, max)
+
+Need to do HTML implementation and overall grade calculation.
