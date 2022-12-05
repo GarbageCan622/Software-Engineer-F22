@@ -6,14 +6,16 @@ hello
 
 sandra's to do list (code):
 
-Student (see data dictionary for further info)
+already do:
+necessary code is implemented, spaghettily
+- i put it all onto one code file (scripts) FOR NOW (im fucking tired)
+- this code is not my best code (not even fucking close), theres a lot of redundant things in here
+- has not been tested to see if it works (it should work?)
 
-*** implementation done in javascript ***
 
-*** figure out how make it part of prototype *** —> LOOK AT IT
-
-- Student ID attribute (int) (WIP)
-- Adjust self scaling function
-- GPA grade calc function (WIP)
-- Mock grade function (WIP)
-- Calc from letter grade (CfLG) (enter letter, returns grade needed to get that letter) (One for category and one for assignment) (WIP)
+will do:
+- refactoring
+- student class as a module or whatever
+- html for adjust_self_scaling
+- viewGrades() implementation 
+- make toy instantiations of classes to test funtionality
