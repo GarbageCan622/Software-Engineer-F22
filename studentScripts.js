@@ -109,6 +109,7 @@ class Assignment {
     // generates the HTML code to display an assignment properly based on the provided grid structure
     toHTMLString(SID) {
         let grade = 100 * fix((this.grade[SID] / this.points), 3);
+        if (weightOn) { grade *= fix((math.categoryWeights[this.category] / 100), 3); } // RWALLY BAD FIX
         str = "";
         str += '<div class="textLeft">' + this.name + '</div>';
         str += '<div class="textRight"><input type = "text" class="gradeNumerator" value="' + this.grade[SID] + '"readonly>/' + this.points + '</div>';
@@ -121,7 +122,7 @@ class Assignment {
 
     // string form of an assignment for a student (comma separated)
     toString(SID) {
-        str = "";
+        let str = "";
         str += this.name +",";
         str += this.category + ",";
         str += (this.dueDate) + ",";
@@ -129,6 +130,7 @@ class Assignment {
         str += (this.submitDate[SID]) + ",";
         str += (this.grade[SID]) + ",";
         str += (this.grade[SID] / this.points) * 100 + "%\n";
+        return str;
     }
 }
 class Course {
@@ -587,9 +589,27 @@ weightText.addEventListener("click", expandWeight);
 let exportText = document.getElementById('exportText');
 let exportDiv = document.getElementById('exportMenu');
 
+function generateCSV(course, sid) {
+    // get category titles for assignments
+    let str = "";
+    str += "name,category,due date,total points,submitted,points,grade\n";
+    for (let i = 0; i < course.assignments.length; i++) {
+        str += course.assignments[i].toString(sid);
+    }
+    return str;
+}
+function csvExport() {
+    var text = generateCSV(math, sandra.SID);
+    var a = document.createElement("a");
+    a.href = window.URL.createObjectURL(new Blob([text], {type: "text/plain"}));
+    a.download = "UserGrades.csv";
+    a.click();
+}
+function pdfExport() {
+}
 function expandExport() {
-    exportDiv.innerHTML += '<div id = "csvDiv" class="exportButton"><button type="button" id="exportCSV" class="menuButton">Export as CSV </button></div>';
-    exportDiv.innerHTML += '<div id = "pdfDiv" class="exportButton"><button type="button" id="exportPDF" class="menuButton">Export as PDF </button></div>';
+    exportDiv.innerHTML += '<div id = "csvDiv" class="exportButton"><button type="button" id="exportCSV" class="menuButton" onclick="csvExport()">Export as CSV </button></div>';
+    exportDiv.innerHTML += '<div id = "pdfDiv" class="exportButton"><button type="button" id="exportPDF" class="menuButton" onclick="pdfExport()">Export as PDF </button></div>';
     exportText.removeEventListener("click", expandExport);
     exportText.addEventListener("click", collapseExport);
 }
@@ -606,6 +626,15 @@ exportText.addEventListener("click", expandExport);
 let weightToggleText = document.getElementById('weightToggleText');
 let weightToggleDiv = document.getElementById('weightToggleMenu');
 
+var weightOn = false;
+function toggleUnWeight() {
+    if (weightOn) { weightOn = !weightOn; }
+    document.getElementById("assignments").innerHTML = math.toHTMLString(sandra.SID);
+}
+function toggleWeight() {
+    if (!weightOn) { weightOn = !weightOn; }
+    document.getElementById("assignments").innerHTML = math.toHTMLString(sandra.SID);
+}
 function expandWeightToggle() {
     weightToggleDiv.style.display = 'block';
     weightToggleText.removeEventListener("click", expandWeightToggle);
