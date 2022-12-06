@@ -125,7 +125,7 @@ function calc_overall() {
 }
 
 function load_letter_scale() {
-	let arr = JSON.parse(localStorage.getItem('ELS'));
+	var arr = JSON.parse(localStorage.getItem('ELS'));
 	alert(arr[0]);
 }
 
