@@ -1,17 +1,3 @@
-// student class
-
-
-// assumes User class already exists
-class Student extends User {
-    constructor(sid) {
-        this.SID = sid;
-        this.GPA = 0;
-    }
-}
-
-/*
-HELPER FUNCTIONS
-*/
 
 // fixes a number to a set number of decimal places
 var fix = function(n, d) { return Number(n.toFixed(d)); }
@@ -23,48 +9,243 @@ var sum = function(A, weights = []) {
     return fix(sum, 2);
 }
 
-// searches through containers based on their .name attribute, returns the found container
-var searchByName = function(key, container) {
-    let ret; // exist, albeit falsy
-    for (item of container) if (item.name === key) { ret = item; break; }
-    return ret;
+// count sort
+// A is some array of assignments
+// radix is some array that holds the 'digits' for the counts, length is the 'base'
+function countSort(A, radix) {
+    let count = (new Array(radix)).fill(0), aux = new Array(A.length), i;
+    for (i = 0; i < A.length; i++) count[radix.indexOf(A[i].category)]++; // counting
+    for (i= 1; i < A.length; i++) count[i] += count[i - 1]; // index mapping
+    for (i= 0; i < A.length; i++) { // placing in auxillary array
+        j = radix.indexOf(A[i].category);
+        aux[count[j]] = A[i];
+        count[j]--;
+    }
+    for (i = 0; i < A.length; i++) { A[i] = aux[i];}
+    return A;
 }
+//Variables
+var name;
+var credits;
+const letters = ["A", "B", "C", "D", "F"];
+// Maps
+const overall_grades = new Map();
+const category_weights = new Map();
+const homework_grades = new Map();
+const quiz_grades = new Map();
+const exam_grades = new Map();
+const cat_temp = new Map();
+const writing_assignments = new Map();
+
+//Add Values
+//{
+    overall_grades[1] =  88.9;
+    overall_grades[2] = 78.1;
+    overall_grades[3] = 86.5;
+    overall_grades[4] = 82.3;
+
+    category_weights["Homework"] = 20;
+    category_weights["Quiz"] = 15;
+    category_weights["Exam"] =  40;
+    category_weights["Writing Assignments"] = 25;
+
+    homework_grades[1] = 76;
+    homework_grades[2] = 77;
+    homework_grades[3] = 78;
+    homework_grades[4] = 79;
+
+    quiz_grades[1] = 80;
+    quiz_grades[2] = 81;
+    quiz_grades[3] = 82;
+    quiz_grades[4] = 83;
+
+    exam_grades[1] = 84;
+    exam_grades[2] = 85;
+    exam_grades[3] = 86;
+    exam_grades[4] = 87;
+
+    writing_assignments[1] = 70;
+
+    cat_temp["Homework"] = homework_grades;
+    cat_temp["Quiz"] = quiz_grades;
+    cat_temp["Exam"] = exam_grades;
+    cat_temp["Writing Assignments"] = writing_assignments;
+//}
+
+//Lists
+const assignment_categories = ["Homework", "Quiz", "Exam", "Writing Assignments"];
+const student_ids = [1, 2, 3, 4];   //May not implement
+const assignments = [];
+const letter_scale = [90, 80, 70, 60, 0];    //Corresponds to letter grades. A, B, C, D, F
+const category_grades = [homework_grades, quiz_grades, exam_grades, writing_assignments];
+
+// IMLPEMENT USER CLASS IN HERE TOO
+class Student {
+    // add user stuff here
+    constructor(name = "", sid = 0, gpa = 0) {
+        this.name = name;
+        this.SID = sid;
+        this.GPA = gpa; // students current cumulative gpa
+    }
+}
+
+class Assignment {
+    constructor(name = "", category = "", dueDate = "", points = 100) {
+        this.name = name;
+        this.dueDate = (dueDate == false) ? (new Date()).toDateString() : (new Date(dueDate)).toDateString();
+        this.category = category;
+        this.points = points;
+        this.isPublished = false;
+        this.submitDate = new Map();
+        this.grade = new Map();
+        for (let sid of student_ids) { 
+            this.submitDate[sid] = (new Date()).toDateString();
+            this.grade[sid] = undefined;
+        }
+
+
+    }
+
+    // generates the HTML code to display an assignment properly based on the provided grid structure
+    toHTMLString(SID) {
+        let grade = 100 * fix((this.grade[SID] / this.points), 3);
+        str = "";
+        str += '<div class="textLeft">' + this.name + '</div>';
+        str += '<div class="textRight"><input type = "text" class="gradeNumerator" value="' + this.grade[SID] + '"readonly>/' + this.points + '</div>';
+        str += '<div class="textLeft">Category: ' + this.category + '</div>';
+        str += '<div class="textRight">Grade: ' + grade + '</div>';
+        str += '<div class="textLeft">Due Date: ' + this.dueDate + '</div>';
+        str += '<div class="textRight">Submitted: ' + this.submitDate[SID] + '</div>';
+        return str;
+    }
+
+    // string form of an assignment for a student (comma separated)
+    toString(SID) {
+        str = "";
+        str += this.name +",";
+        str += this.category + ",";
+        str += (this.dueDate) + ",";
+        str += this.points + ",";
+        str += (this.submitDate[SID]) + ",";
+        str += (this.grade[SID]) + ",";
+        str += (this.grade[SID] / this.points) * 100 + "%\n";
+    }
+}
+class Course {
+    constructor(name = "", credits = 0, assignmentCategories = [], scale = [], weights = {}) {
+        this.name = name;
+        this.credits = credits;
+        this.categories = assignmentCategories;
+        this.letterScale = scale;
+        this.categoryWeights = weights; 
+
+
+
+        // make empty lists for Assignments, cat grades and grades
+        this.assignments = [];
+
+        // overall grades, category grades
+        this.overallGrades = new Map();
+        this.categoryGrades = new Map;
+        for (let cat of this.categories) { this.categoryGrades[cat] = new Map(); }
+    }
+    toHTMLString(sid) {
+        let grade = this.overallGrades[sid], letterGrade = toLetter(grade, this.letterScale, letters);
+        let head = '<div id="assignHead"><h2><u>My Grades</u></h2><div id="blank"></div>';
+        head += '<div class="textLeft"><h3>Total:</h3></div><div class="textRight"><h3>' + grade + ': ' + letterGrade + '</h3></div></div>';
+        let str = head + genAssignments(this, sid);
+        return str;
+    }
+
+}
+
+
+// class instatiations
+
+// course(s)
+var math = new Course("math", 3, assignment_categories, letter_scale, category_weights);
+math.categoryGrades = cat_temp;
+math.overallGrades = overall_grades;
+
+// student
+var sandra = new Student("sandra", 1, 3.7);
+
+// assignments in courses
+ass = new Assignment("Homework 1", "Homework", "11/16/2022", 30); ass.isPublished = true;
+ass.grade[sandra.SID] = 20; ass.submitDate[sandra.SID] = (new Date("11/14/2022")).toDateString();
+math.assignments.push(ass);
+
+ass = new Assignment("Quiz 1", "Quiz", "11/16/2022", 100); ass.isPublished = true;
+ass.grade[sandra.SID] = 93.3; ass.submitDate[sandra.SID] = (new Date("11/14/2022")).toDateString();
+math.assignments.push(ass);
+
+ass = new Assignment("Term paper", "Writing Assignments", "11/23/2022", 200); ass.isPublished = true;
+ass.grade[sandra.SID] = 140; ass.submitDate[sandra.SID] = (new Date("11/23/2022")).toDateString();
+math.assignments.push(ass);
+
+ass = new Assignment("Homework 2", "Homework", 100); ass.isPublished = false;
+// submission dates/grades generated upon retrieval if false
+math.assignments.push(ass);
+
+ass = new Assignment("Homework 3", "Homework"); ass.isPublished = false;
+math.assignments.push(ass);
+
+ass = new Assignment("Homework 4", "Homework"); ass.isPublished = false;
+math.assignments.push(ass);
+
+ass = new Assignment("Homework 5", "Homework"); ass.isPublished = false;
+math.assignments.push(ass);
+
+ass = new Assignment("Homework 6", "Homework"); ass.isPublished = false;
+math.assignments.push(ass);
+
+ass = new Assignment("Homework 7", "Homework"); ass.isPublished = false;
+math.assignments.push(ass);
+
+// further lists
+let courses = [math];
+
+
+// html assignment generation
+str = "";
+//head = '<div id="assignHead"><h2><u>My Grades</u></h2><div id="blank"></div><div class="textLeft"><h3>Total:</h3></div><div class="textRight"><h3>83.2% : B</h3></div></div>';
+function genAssignments(course, sid) {
+    let str = '<div id="assignGrades">';
+    for (assignment of course.assignments) {
+        str += assignment.toHTMLString(sid);
+    }
+    str += '</div>';
+    return str;
+}
+document.getElementById("assignments").innerHTML = math.toHTMLString(sandra.SID);
+document.getElementById("assignments").innerHTML = "";
+document.getElementById("assignments").innerHTML = math.toHTMLString(sandra.SID);
+
+/*
+HELPER FUNCTIONS
+*/
 
 // converts letter grade to a single number (for gpa calc) (this is that 'course gpa')
 var gradeConvert = function(letterGrade) {
     let ret = -1;
-    switch(letterGrade) {
-        case "A": ret = 4.0; break;
-        case "A-": ret = 3.7; break;
-        case "B+": ret = 3.3; break;
-        case "B": ret = 3.0; break;
-        case "B-": ret = 2.7; break;
-        case "C+": ret = 2.3; break;
-        case "C": ret = 2.0; break;
-        case "C-": ret = 1.7; break;
-        case "D+": ret = 1.3; break;
-        case "F": ret = 0; break;
-    }
-    return ret;
-}
-
-
-// calc gpa function
-Student.prototype.calcGPA = function(courses) {
-    // weighted average of a student's overall grades
-    totalCredits = 0;
-    weightSum = 0;
-    for (i < 0; i < courses.length; i++) {
-        totalCredits += courses[i].credits;
-        weightSum += (courses[i].credits * convertGrade(toLetterGrade(courses[i].overall_grades[this.SID], courses[i].letter_scale, false)));
-    }
-    return fix(weightSum/totalCredits, 4);
+    if (letterGrade === "A") { ret = 4.0 }
+    else if (letterGrade === "A-") { ret = 3.7; }
+    else if (letterGrade === "B+") { ret = 3.3; }
+    else if (letterGrade === "B") { ret = 3.0; }
+    else if (letterGrade === "B-") { ret = 2.7; }
+    else if (letterGrade === "C+") { ret = 2.3; }
+    else if (letterGrade === "C") { ret = 2.0; }
+    else if (letterGrade === "C-") { ret = 1.7; }
+    else if (letterGrade === "D+") { ret = 1.3; }
+    else if (letterGrade === "D") { ret = 1.0; }
+    else if (letterGrade === "F") { ret = 0.0; }
+    return Number(ret);
 }
 
 // returns letter grade given the scale, letters, and an overall grade
-var toLetter = function(grade, ranges, letters) {
+function toLetter(grade, ranges, letters) {
     let letter = "",  max = 1.0;
-    for (i = 0; i < ranges.length; i++) {
+    for (let i = 0; i < ranges.length; i++) {
         if (grade >= ranges[i] && grade < max) { letter = letters[i]; break; }
         max = ranges[i];
     }
@@ -72,31 +253,33 @@ var toLetter = function(grade, ranges, letters) {
 }
 
 var toLetterGrade = function(grade, ranges, isStudent) {
-    letters = (isStudent == true) ? ["A", "B", "C", "D", "F"] : ["A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "F"];
+    let letters = (isStudent == true) ? ["A", "B", "C", "D", "F"] : ["A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "F"];
     return toLetter(grade, ranges, letters);
 }
 
-
+// calc gpa function
+Student.prototype.calcGPA = function(courses) {
+    // weighted average of a student's overall grades
+    let totalCredits = 0, weightSum = 0;
+    for (let i = 0; i < courses.length; i++) {
+        let letterGrade = courses[i].overallGrades[this.SID];
+        totalCredits += courses[i].credits;
+        weightSum += (courses[i].credits * gradeConvert(toLetterGrade(letterGrade, courses[i].letterScale, true)));
+    }
+    let ret = fix(weightSum/totalCredits, 4);
+    return ret;
+}
 // selfscaling just returns a STRING of an updated scale so that it is not permanent
-
-// STILL NEEDS HTML THINGS, DO LATER.
 Student.prototype.adjustSelfScaling = function(course, scale) {
 
     // get the grades!
-    let letters = ["A", "B", "C", "D", "F"]; // should be a PARALLEL LIST TO SCALE
-    let overallGrade = course.overall_grades[this.SID];
+    let overallGrade = course.overallGrades[this.SID];
     let adjustedLetterGrade = toLetter(overallGrade, scale, letters);
 
     // adjusted scale string
-    str = "";
-    str += "<p> Overall Grade: " + overallGrade;
-    str += "<br/> Letter Grade (adjusted): " + adjustedLetterGrade;
-
-    // letter : max-min
-    max = 1.0
-    for (i = 0; i < scale.length; i++) str += "<br/>" + letters[i] + ": " + max + "-" + ranges[i];
-
-    str += "</p>";
+    let str = "";
+    str += "<p> Overall Grade: " + overallGrade + "<br/>";
+    str += "Letter Grade (adjusted): " + adjustedLetterGrade + "<br/>";
     return str;
 
 }
@@ -104,38 +287,38 @@ Student.prototype.adjustSelfScaling = function(course, scale) {
 // calculate from letter grade, given an assignment
 
 var getMinGrade = function(scale, letter) {
-    // assumes full letter grade scale, no A+ nor D-
+    // assumes full letter grade scale.
     // also assumes letter WILL be found.
-    let grades = ["A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "F"];
+    let grades = ["A", "B", "C", "D", "F"];
     return fix(scale[grades.indexOf(letter)], 3);
 }
-Student.prototype.caluclateGradeNeededAssignment = function(course, assignment, letter) {
+Student.prototype.calculateGradeNeededAssignment = function(course, cat, letter) {
     // convert letter grade to numeric form, minimum 
-    let grade = getMinGrade(course.scale, letter), cat = assignment.category;
+    let grade = getMinGrade(course.letterScale, letter);
 
     // get number of assignments in category
     let sum = 0, nAss = 0;
-    for (ass of course.assignments) {
-        if (ass.category === cat) { nAss++; sum += (ass.grade[this.SID]); }
+    for (let ass of course.assignments) {
+        if (ass.category == cat && ass.isPublished == true) { nAss++; sum += (ass.grade[this.SID]); }
     }
 
     // ((Σa) + x) / n = g, gn - Σa = x 
     return fix(((grade * (nAss + 1)) - sum), 2);
 }
 
-Student.prototype.calculateGradeNeededCategory = function(course, category, letter) {
+Student.prototype.calculateGradeNeededCategory = function(course, cat, letter) {
     // minimum numeric grade given letter
-    let grade = getMinGrade(course.scale, letter);
+    let grade = getMinGrade(course.letterScale, letter);
 
     // category weight
-    let w = course.category_weights[category];
+    let w = course.categoryWeights[cat];
 
     // getting weights and grades
     let catGrades = [], weights = [];
-    for (i = 0; i < course.assignment_categories.length; i++) {
-        if (course.assignment_categories[i] === cat) continue;
-        catGrades.push(course.category_grades[i][this.SID]);
-        weights.push(course.category_weights[course.assignment_categories[i]]);
+    for (i = 0; i < course.categories.length; i++) {
+        if (course.categories[i] === cat) continue;
+        catGrades.push(course.categoryGrades[i][this.SID]);
+        weights.push(course.categoryWeights[course.categories[i]]);
     }
 
     // grade needed
@@ -146,29 +329,38 @@ Student.prototype.calculateGradeNeededCategory = function(course, category, lett
 }
 
 // mock grade stuff.
-Student.prototype.enterMockGrade = function(course, assignment, grade) {
+Student.prototype.enterMockGrade = function(course, assCat, grade) {
     // 1. get grades and categories
-    let catGrades = [], weights = [];
-    for (i = 0;i < course.assignment_categories.length; i++) {
-        let cat = course.assignment_categories[i];
-        catGrades.push(course.category_grades[i][this.SID]);
-        weights.push(course.category_weights[cat]);
+    let catGrades = new Array(); weights = new Array();
+    for (let i = 0; i < course.categories.length; i++) {
+        let cat = course.categories[i];
+        catGrades.push(course.categoryGrades[cat][this.SID]);
+        weights.push(course.categoryWeights[cat] / 100);
     }
 
     // 2. updating grade category with grade, assumes grade and category grades are on same scale (0-1 or 0-100)
 
     // number of assignments currently in category
-    let nAss = 0, cat = assignment.category, catDex = course.assignment_categories.indexOf(cat);
-    for (ass of course.assignments) nAss += ((ass.category === cat) ? 1 : 0);
+    let nAss = 0, catDex = course.categories.indexOf(assCat);
+    for (ass of course.assignments) nAss += ((ass.category == assCat && ass.isPublished == true) ? 1 : 0);
 
     // update category
-    catGrades[catDex] = ((catGrades[catDex] * nAss) + grade) / (nAss + 1);
+    newVal = ((catGrades[catDex] * nAss) + grade) / (nAss + 1);
+    catGrades[catDex] = newVal;
 
     // update overall grade
-    new_grade = sum(catGrades, weights);
+    // buggy
+    let new_grade = sum(catGrades, weights);
+    let letter_grade = toLetter(new_grade, course.letterScale, letters);
 
-    // returns a list, 1st element is numeric, 2nd is letter
-    return [new_grade, toLetterGrade(new_grade, course.scale, false)];
+    // returns a list, 1st element is numeric category grade, 2nd is numeric overall grade, 3rd is overall letter grade
+    return [catGrades[catDex], new_grade, letter_grade];
+}
+
+function getAssList(A) {
+    let assList = [];
+    for (let ass of A) { if (ass.isPublished === false) {assList.push(ass.name);} }
+    return assList;
 }
 
 //this makes the textFields on every other assingment yellow
@@ -187,10 +379,27 @@ let sortText = document.getElementById('sortingText');//this is the button
 let sortDiv = document.getElementById('sortingMenu');//this is the div where we insert the content
 //it is blank by default in the html, we add the content thru expandSort() and clear the content in collapseSort()
 
+
+function qux() {
+    let choice = String(document.getElementById("assSort").value), cats = math.categories; cats.sort();
+
+    // inner sort of assignments (unstable)
+    ass = math.assignments.sort(function(a, b){ return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0);});
+
+    // outer sort of categories (stable)
+    //ass = countSort(ass, cats);
+    //sortDiv.innerHTML += ass;
+
+    // descending reverses order of elements
+    if (choice == "descending") { ass.reverse(); }
+    math.assignments = ass;
+    document.getElementById("assignments").innerHTML = math.toHTMLString(sandra.SID);
+}
 function expandSort() {
     //fill sortDiv with content
-    sortDiv.innerHTML += '<label for="typeSort">Sort by type:</label> <select name = "typeSort" id = "typeSort" class = "dropdown"> <option value="none" select>None</option> <option value="homework">Homework</option><option value="quizes">Quizes</option><option value="writingAssignments">Writing Assignments</option></select > <br />';
-    sortDiv.innerHTML += '<label for="dateSort">Sort by due date:</label> <select name = "dateSort" id = "dateSort" class = "dropdown"> <option value="descending" select>Descending</option><option value="ascending">Ascending</option> </select >';
+    //sortDiv.innerHTML += '<label for="typeSort">Sort by type:</label> <select name = "typeSort" id = "typeSort" class = "dropdown"> <option value="none" select>None</option> <option value="homework">Homework</option><option value="quizes">Quizzes</option><option value="writingAssignments">Writing Assignments</option></select > <br />';
+    sortDiv.innerHTML += '<label for="assSort">Sort order:</label> <select name = "assSort" id = "assSort" class = "dropdown"> <option value="descending" select>Descending</option><option value="ascending">Ascending</option> </select >';
+    sortDiv.innerHTML += '<br/><button type="sortButton" onClick="qux()">sort assignments</button><br/>';
     sortText.removeEventListener("click", expandSort);//turn off expand sort on the button
     sortText.addEventListener("click", collapseSort);//turn on collapseSort on the button
 }
@@ -208,10 +417,10 @@ let gpaText = document.getElementById('gpaText');
 let gpaDiv = document.getElementById('gpaMenu');
 
 
-
-// TO DO: GPA MATH HERE
 function expandGpa() {
-    gpaDiv.innerHTML += '<p>Overall GPA : 3.214<br/>Semester GPA: 3.345<br/>Class GPA: 3.342</p>';
+    // weighted average of a student's overall grades
+    gpa = sandra.calcGPA(courses);
+    gpaDiv.innerHTML += 'Semester GPA: ' + gpa + '<br/></p>';
     gpaText.removeEventListener("click", expandGpa);
     gpaText.addEventListener("click", collapseGpa);
 }
@@ -228,8 +437,29 @@ gpaText.addEventListener("click", expandGpa);
 let mockText = document.getElementById('mockText');
 let mockDiv = document.getElementById('mockMenu');
 
+function findMock(course, sid, grades) {
+    // find the mock (modified) grade
+    let mockdex = -1, i;
+    for (i = 0; i < course.assignments.length; i++) {
+        let ass = course.assignments[i];
+        if (grades[i].value != ass.grade[sid]) { mockdex = i; break;}
+    }
+    return mockdex;
+}
+function quuz() {
+    // retrieve the one (1) grade that has been changed
+    let grade;
+    let grades = document.getElementsByClassName("gradeNumerator");
+    mockdex = findMock(math, sandra.SID, grades);
+    grade = fix(grades[mockdex].value / math.assignments[mockdex].points, 3) * 100;
+    mockGrades = sandra.enterMockGrade(math, math.assignments[mockdex].category, grade);
+    mockDiv.innerHTML += "Category Grade: " + mockGrades[0] + "</br>";
+    mockDiv.innerHTML += "Course Grade: " + mockGrades[1] + "</br>";
+    mockDiv.innerHTML += "Letter Grade: " + mockGrades[2] + "</br>";
+}
 function expandMock() {
-    mockDiv.innerHTML += '<div><button type="button" id="calcMock" class="menuButton">Calculate mock grade</button></div>';
+    // on click get the grades
+    mockDiv.innerHTML += '<div><button type="button" id="calcMock" class="menuButton" onclick="quuz()">Calculate mock grade</button></div>';
     for (ele = 0; ele < highlightedItems.length; ele++) {  
         highlightedItems[ele].classList.add('mockColor');
         highlightedItems[ele].readOnly = false;
@@ -252,36 +482,95 @@ function collapseMock() {
 mockText.addEventListener("click", expandMock);
 
 
-// TO DO: CfLG MATH HERE
-//desired grade calculation
-let gradeCalcText = document.getElementById('gradeCalcText');
-let gradeCalcDiv = document.getElementById('gradeCalcMenu');
+//desired grade calculation (assignment)
+let gradeCalcTextAss = document.getElementById('gradeCalcTextAss');
+let gradeCalcDivAss = document.getElementById('gradeCalcMenuAss');
 
-function expandGradeCalc() {
-    gradeCalcDiv.innerHTML += '<label for="desiredGrade">Desired grade:</label><input type="text" name = "desiredGrade"><br/>';
-    gradeCalcDiv.innerHTML += '<label for="desiredDropdown">Assignment:</label> <select name = "desiredDropdown" id = "desiredDropdown" class = "dropdown"> <option value="homework1" select>Homework 1</option><option value="quiz1">Quiz 1</option> </select ><br/>';
-    gradeCalcDiv.innerHTML += '<button type="button" id="calcDesired" >Calculate desired grade</button><br/>';
-    gradeCalcDiv.innerHTML += 'Minimum value for desired grade: 73.5%';
-    gradeCalcText.removeEventListener("click", expandGradeCalc);
-    gradeCalcText.addEventListener("click", collapseGradeCalc);
+let fooval;
+let foovalString = "";
+function foo() { 
+
+    foovalString = "";
+    let grade = String(document.getElementById("desiredGrade").value); 
+    let cat = String(document.getElementById("desiredDropdown").value);
+    fooval = sandra.calculateGradeNeededAssignment(math, cat, grade);
+    foovalString = fooval + "%";
+    gradeCalcDivAss.innerHTML += foovalString;
+ }
+function expandGradeCalcAss() {
+    gradeCalcDivAss.innerHTML += '<label for="desiredGrade">Desired grade:</label><input type="text" name = "desiredGrade" id = desiredGrade><br/>';
+    gradeCalcDivAss.innerHTML += getDropDownOptions(getAssList(math.assignments), "Assignment");
+    gradeCalcDivAss.innerHTML += '<button type="button" id="calcDesired" onclick="foo()">Calculate desired grade</button><br/>';
+    gradeCalcDivAss.innerHTML += 'Minimum value for desired grade: ';
+    gradeCalcTextAss.removeEventListener("click", expandGradeCalcAss);
+    gradeCalcTextAss.addEventListener("click", collapseGradeCalcAss);
 }
 
-function collapseGradeCalc() {
-    document.getElementById('gradeCalcMenu').innerHTML = "";
-    gradeCalcText.removeEventListener("click", collapseGradeCalc);
-    gradeCalcText.addEventListener("click", expandGradeCalc);
+function collapseGradeCalcAss() {
+    document.getElementById('gradeCalcMenuAss').innerHTML = "";
+    gradeCalcTextAss.removeEventListener("click", collapseGradeCalcAss);
+    gradeCalcTextAss.addEventListener("click", expandGradeCalcAss);
 }
 
-gradeCalcText.addEventListener("click", expandGradeCalc);
+gradeCalcTextAss.addEventListener("click", expandGradeCalcAss);
+
+//desired grade calculation (category)
+let gradeCalcTextCat = document.getElementById('gradeCalcTextCat');
+let gradeCalcDivCat = document.getElementById('gradeCalcMenuCat');
+
+let barval;
+let barvalString = "";
+function bar() { 
+
+    foovalString = "";
+    let grade = String(document.getElementById("desiredGrade").value); 
+    let cat = String(document.getElementById("desiredDropdown").value);
+    fooval = sandra.calculateGradeNeededAssignment(math, cat, grade);
+    foovalString = fooval + "%";
+    gradeCalcDivCat.innerHTML += foovalString;
+ }
+
+ function getDropDownOptions(A, dropdownName) {
+    let options = '<label for="desiredDropdown">' + dropdownName + ':</label><select name = "desiredDropdown" id = "desiredDropdown" class = "dropdown">';
+    for (let i = 0; i < A.length; i++) {
+        let cat = A[i];
+        options += '<option value="' + cat + '"';
+        if (i === 0) { options += ' select';}
+        options += '>' + cat + '</option>'; 
+    }
+    options += "</select ><br/>";
+    return options;
+ }
+function expandGradeCalcCat() {
+    gradeCalcDivCat.innerHTML += '<label for="desiredGrade">Desired grade:</label><input type="text" name = "desiredGrade" id = desiredGrade><br/>';
+    gradeCalcDivCat.innerHTML += getDropDownOptions(math.categories, "Category");
+    gradeCalcDivCat.innerHTML += '<button type="button" id="calcDesired" onclick="bar()">Calculate desired grade</button><br/>';
+    gradeCalcDivCat.innerHTML += 'Minimum value for desired grade: ';
+    gradeCalcTextCat.removeEventListener("click", expandGradeCalcCat);
+    gradeCalcTextCat.addEventListener("click", collapseGradeCalcCat);
+}
+
+function collapseGradeCalcCat() {
+    document.getElementById('gradeCalcMenuCat').innerHTML = "";
+    gradeCalcTextCat.removeEventListener("click", collapseGradeCalcCat);
+    gradeCalcTextCat.addEventListener("click", expandGradeCalcCat);
+}
+
+gradeCalcTextCat.addEventListener("click", expandGradeCalcCat);
 
 
-// TO DO: CATEGORY WEIGHTS HERE
 //weight menu
 let weightText = document.getElementById('weightText');
 let weightDiv = document.getElementById('weightMenu');
 
+
 function expandWeight() {
-    weightDiv.innerHTML += 'Homework: 35%<br/>Quizes: 25%<br/>Writing Assignments: 400%';
+    let str = "";
+    for (let i = 0; i < math.categories.length; i++) {
+        let cat = String(math.categories[i]);
+        str += cat +": " +  math.categoryWeights[cat] + "%<br/>";
+    }
+    weightDiv.innerHTML += str;
     weightText.removeEventListener("click", expandWeight);
     weightText.addEventListener("click", collapseWeight);
 }
@@ -357,4 +646,45 @@ function unweightedButtonSelected() {
 unweightedButton.addEventListener("click", unweightedButtonSelected);
 weightedButton.classList.add('selectedWeightButton');
 unweightedButton.classList.add('unselectedWeightButton');
+
+
+//adjust self scaling button code
+//the logic here gets repeated for each button on the right menu
+let adjustText = document.getElementById('selfScaleText');//this is the button
+let adjustDiv = document.getElementById('selfScaleMenu');//this is the div where we insert the content
+//it is blank by default in the html, we add the content thru expandSort() and clear the content in collapseSort()
+
+
+let bazval= "";
+function baz() {
+    // get the numbers entered to form a scale list
+    let inputs = document.getElementById("selfScale"), ranges = [];
+    for (let i = 0; i < letters.length; i++) ranges.push(document.getElementById("selfScale" + letters[i]).value);
+
+    // compute the new letter grade
+    bazval = sandra.adjustSelfScaling(math, ranges);
+    adjustDiv.innerHTML += bazval;
+}
+function expandAdjust() {
+
+    // showing the letters
+    let divName = "selfScale";
+    let str = ': <input type="text" id="' + divName;
+    adjustDiv.innerHTML += '<form id="' + divName +'">';
+    for (let letter of letters) { adjustDiv.innerHTML += letter + str + letter +'">' + '<br/>'; }
+
+    // calc new letter grade button
+    adjustDiv.innerHTML += '<button type="button" id="scale" onclick="baz()">Calculate letter grade</button><br/>';
+
+    adjustText.removeEventListener("click", expandAdjust);//turn off expand sort on the button
+    adjustText.addEventListener("click", collapseAdjust);//turn on collapseSort on the button
+}
+
+function collapseAdjust() {
+    document.getElementById('selfScaleMenu').innerHTML = ""; //clear the div
+    adjustText.removeEventListener("click", collapseAdjust);//turn off collapse
+    adjustText.addEventListener("click", expandAdjust);//turn on expand
+}
+
+adjustText.addEventListener("click", expandAdjust);//make sure the button has expandSort() on originally
 
