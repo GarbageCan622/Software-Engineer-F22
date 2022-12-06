@@ -140,30 +140,67 @@ a {
     grid-template-columns: 1fr 1fr;
 }
 
-#assignGrades {
+#assignGradesStu {
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
 
-    #assignGrades>div:nth-child(6n),
-    #assignGrades>div:nth-child(6n -1)
+#assignGradesProf {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#categoriesMenu{
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+
+#adjustLetterScalingMenu{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+
+    #assignGradesProf>div:nth-child(8n),
+    #assignGradesProf>div:nth-child(8n -1)
     {
         border-bottom: 2px solid black;
     }
 
-    #assignGrades > div:nth-child(6n+1),
-    #assignGrades > div:nth-child(6n+2) {
+    #assignGradesProf > div:nth-child(8n+1),
+    #assignGradesProf > div:nth-child(8n+2) {
         padding-top: 10px;
     }
 
-    #assignGrades > div:nth-child(12n),
-    #assignGrades > div:nth-child(12n -1),
-    #assignGrades > div:nth-child(12n -2),
-    #assignGrades > div:nth-child(12n -3),
-    #assignGrades > div:nth-child(12n -4),
-    #assignGrades > div:nth-child(12n -5){
+    #assignGradesProf > div:nth-child(16n),
+    #assignGradesProf > div:nth-child(16n -1),
+    #assignGradesProf > div:nth-child(16n -2),
+    #assignGradesProf > div:nth-child(16n -3),
+    #assignGradesProf > div:nth-child(16n -4),
+    #assignGradesProf > div:nth-child(16n -5),
+    #assignGradesProf > div:nth-child(16n -6),
+    #assignGradesProf > div:nth-child(16n -7){
         background-color: lightgoldenrodyellow;
     }
+
+#assignGradesStu > div:nth-child(6n),
+#assignGradesStu > div:nth-child(6n -1) {
+    border-bottom: 2px solid black;
+}
+
+#assignGradesStu > div:nth-child(6n+1),
+#assignGradesStu > div:nth-child(6n+2) {
+    padding-top: 10px;
+}
+
+#assignGradesStu > div:nth-child(12n),
+#assignGradesStu > div:nth-child(12n -1),
+#assignGradesStu > div:nth-child(12n -2),
+#assignGradesStu > div:nth-child(12n -3),
+#assignGradesStu > div:nth-child(12n -4),
+#assignGradesStu > div:nth-child(12n -5) {
+    background-color: lightgoldenrodyellow;
+}
 
     #assignName{
         float:left;
@@ -187,6 +224,10 @@ a {
     height:auto;
     padding:15px;
     border-bottom:2px solid black;
+}
+
+#mailto_field{
+    text-align: center;
 }
 
 .menuButton {
@@ -282,3 +323,39 @@ a {
 .editGrades{
     margin-right: 10px;
 }
+
+.hidden{
+    display:none;
+}
+
+.notHidden{
+    display:block;
+}
+
+.studentNames{
+    height: 100px;
+    max-height: 100px;
+    overflow:hidden;
+    font-size: 18px;
+}
+
+.studentGrades {
+    height: 100px;
+    max-height: 100px;
+    overflow: auto;
+    font-size: 18px;
+}
+
+.studentGrades input{
+    height: 17px;
+}
+
+    .line {
+    border-bottom: 1px dashed black;
+    content: "";
+    display: block;
+}
+
+    .studentNames p{
+        padding-top:2px;
+    }

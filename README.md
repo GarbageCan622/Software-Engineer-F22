@@ -2,10 +2,6 @@
 Cool place for cool people
 hello
 
-
-
-sandra's to do list (code):
-
 already do:
 necessary code is implemented, spaghettily
 has correspondin html to best of my abilty in my limited experience with html

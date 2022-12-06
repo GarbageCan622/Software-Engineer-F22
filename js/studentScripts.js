@@ -212,7 +212,7 @@ let courses = [math];
 str = "";
 //head = '<div id="assignHead"><h2><u>My Grades</u></h2><div id="blank"></div><div class="textLeft"><h3>Total:</h3></div><div class="textRight"><h3>83.2% : B</h3></div></div>';
 function genAssignments(course, sid) {
-    let str = '<div id="assignGrades">';
+    let str = '<div id="assignGradesStu">';
     for (assignment of course.assignments) {
         str += assignment.toHTMLString(sid);
     }
@@ -680,7 +680,6 @@ unweightedButton.addEventListener("click", unweightedButtonSelected);
 weightedButton.classList.add('selectedWeightButton');
 unweightedButton.classList.add('unselectedWeightButton');
 
-
 //adjust self scaling button code
 //the logic here gets repeated for each button on the right menu
 let adjustText = document.getElementById('selfScaleText');//this is the button
@@ -721,3 +720,22 @@ function collapseAdjust() {
 
 adjustText.addEventListener("click", expandAdjust);//make sure the button has expandSort() on originally
 
+
+// local storage how-to
+/*
+if (document.getElementById('MHomework1') != null) { //check if id is on this page, really we are checking if we are in mathStudent or englishStudent. If the id is on the page grab the value of the assignment stored in the localStorage and use that as the value
+    document.getElementById('MHomework1').value = localStorage.getItem('MHomework1');
+}
+
+if (document.getElementById('MQuiz1') != null) {
+    document.getElementById('MQuiz1').value = localStorage.getItem('MQuiz1');
+}
+
+if (document.getElementById('EHomework1') != null) {
+    document.getElementById('EHomework1').value = localStorage.getItem('EHomework1');
+}
+
+if (document.getElementById('EQuiz1') != null) {
+    document.getElementById('EQuiz1').value = localStorage.getItem('EQuiz1');
+}
+*/
