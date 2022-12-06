@@ -32,7 +32,7 @@ if (localStorage.getItem('MQuiz1') == null) {
 		localStorage.setItem('ESIDs', JSON.stringify(ESIDs));
 	}
 	
-	var EHW1 = [88, 90, 75, 88.88888, 100, 100, 83, 87, 70, 60];	//HW1 grades (corresponds to SIDs)
+	var EHW1 = [88, 90, 75, 88.88888, 100, 100, 83, 87, 70, 60];	//HW1 grades (corresponds to SIDs)	
 	if (localStorage.getItem('EHW1') == null) {
 		localStorage.setItem('EHW1', JSON.stringify(EHW1));
 	}

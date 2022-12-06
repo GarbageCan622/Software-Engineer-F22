@@ -47,7 +47,6 @@ const cat_temp = new Map();
 const assignment_categories = ["Homework", "Quiz", "Exam"];
 const student_ids = [1, 2, 3, 4];   //May not implement
 const assignments = [];
-const letter_scale = [90, 80, 70, 60];    //Corresponds to letter grades (>=90 is an A, <90 is a B)
 const category_grades = [homework_grades, quiz_grades, exam_grades];
 
 
@@ -120,17 +119,13 @@ function standard_deviation() {
 function calc_overall() {
     //Multiply all categories by their weight and add together
         //Weights must add to 100 for formula above to work
-    let output = 80;
+    var output = 79;
     document.getElementById('class_avg_text').innerHTML = output;
-}
-
-function load_letter_scale() {
-	var arr = JSON.parse(localStorage.getItem('ELS'));
-	alert(arr[0]);
+	return output;
 }
 
 function to_letter_grade(x) {
-	let out;
+	let out = 'F';
 	if(x >= letter_scale[0]) {
 		out = 'A';
 	}
@@ -142,9 +137,6 @@ function to_letter_grade(x) {
 	}
 	else if(x >= letter_scale[3]) {
 		out = 'D';
-	}
-	else {
-		out = 'F';
 	}
 	document.getElementById('class_letter_text').innerHTML = out;
 }
