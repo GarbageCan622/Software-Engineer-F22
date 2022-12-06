@@ -23,24 +23,6 @@
             <div class="textRight"><h3>83.2% : B-</h3></div>
         </div>
         <div id="assignGradesStu">
-            <!--assignGrades is a grid container, this grid has a width of two so there is a left and a right, the grid looks at divs so I labelled them left grid and right grid-->
-            <div class="textLeft">Homework 1</div>
-            <div class="textRight">
-                <input type="text" class="gradeNumerator" id="MHomework1" value="20" readonly>/30
-            </div>
-            <div class="textLeft">Type: Homework</div>
-            <div class="textRight">Percent: 60%</div>
-            <div class="textLeft">Due: 11/16/2022</div>
-            <div class="textRight">Submitted: 11/14/2022</div>
-
-            <div class="textLeft">Quiz 1</div>
-            <div class="textRight">
-                <input type="text" class="gradeNumerator" id="MQuiz1" value="93.3" readonly>/100
-            </div>
-            <div class="textLeft">Type: Quiz</div>
-            <div class="textRight">Percent: 93.3%</div>
-            <div class="textLeft">Due: 11/16/2022</div>
-            <div class="textRight">Submitted: 11/14/2022</div>
         </div>
     </div>
     <div id="menu">
@@ -62,16 +44,24 @@
             <div><button type="button" id="weightText" class="menuButton">See grade weights </button></div>
             <div id="weightMenu"></div>
         </div>
-        <div id="gradeCalcDiv" class="menuItem">
-            <div><button type="button" id="gradeCalcText" class="menuButton">Desired grade calculaton </button></div>
-            <div id="gradeCalcMenu"></div>
+        <div id="gradeCalcDivAss" class="menuItem">
+            <div><button type="button" id="gradeCalcTextAss" class="menuButton">Desired grade calculation (Assignment) </button></div>
+            <div id="gradeCalcMenuAss"></div>
+        </div>
+        <div id="gradeCalcDivCat" class="menuItem">
+            <div><button type="button" id="gradeCalcTextCat" class="menuButton">Desired grade calculation (Category)</button></div>
+            <div id="gradeCalcMenuCat"></div>
         </div>
         <div id="weightToggleDiv" class="menuItem">
             <div><button type="button" id="weightToggleText" class="menuButton">Toggle grade weights</button></div>
             <div id="weightToggleMenu">
-                <div id="weightedGradeDiv" class="exportButton"><button type="button" id="weightedGrade" class="selectedWeightButton">Weighted Grades</button></div>
-                <div id="unweightedGradeDiv" class="exportButton"><button type="button" id="unweightedGrade" class="unselectedWeightButton">Unweighted Grades </button></div>
+                <div id="weightedGradeDiv" class="exportButton"><button type="button" id="weightedGrade" class="unselectedWeightButton" onclick="toggleWeight()">Weighted Grades</button></div>
+                <div id="unweightedGradeDiv" class="exportButton"><button type="button" id="unweightedGrade" class="selectedWeightButton" onclick ="toggleUnWeight()">Unweighted Grades </button></div>
             </div>
+        </div>
+        <div id="selfScaleDiv" class="menuItem">
+            <div><button type="button" id="selfScaleText" class="menuButton">Adjust Self-Scale</button></div>
+            <div id="selfScaleMenu"></div>
         </div>
         <div id="exportDiv" class="menuItem">
             <div><button type="button" id="exportText" class="menuButton">Export grades </button></div>
