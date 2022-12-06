@@ -13,7 +13,7 @@ if (localStorage.getItem('MQuiz1') == null) {
 }
 
 //English Course
-const letter_scale = [90, 80, 70, 60];
+const ELS = [90, 80, 70, 60];	//English letter scale
 
 const EHW1 = new Map();	//English Homework 1
 EHW1.set(1,88.8);	//First value is student ID, second value is grade
@@ -39,6 +39,10 @@ const EFP = new Map();	//English Final Paper
 EHW1.set(1,85.5);
 EHW1.set(2,83);
 EHW1.set(3,84.2);
+
+if(localStorage.getItem('ELS' == null) {
+   localStorage.setItem('ELS', JSON.stringify(ELS));
+}
 
 if (localStorage.getItem('EHW1' == null) {
 	localStorage.setItem('EHW1', JSON.stringify(EHW1));	//In order to store more than just strings, JSON.stringify must be called on the object or data structure
