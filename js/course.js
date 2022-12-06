@@ -1,7 +1,4 @@
 // JavaScript source code
-function func() {
-	document.getElementById("blank").innerHTML = localStorage.getItem('EHomework1');
-}
 
 //Variables
 var name;
