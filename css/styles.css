@@ -140,7 +140,12 @@ a {
     grid-template-columns: 1fr 1fr;
 }
 
-#assignGrades {
+#assignGradesStu {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#assignGradesProf {
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
@@ -156,27 +161,46 @@ a {
 }
 
 
-    #assignGrades>div:nth-child(8n),
-    #assignGrades>div:nth-child(8n -1)
+    #assignGradesProf>div:nth-child(8n),
+    #assignGradesProf>div:nth-child(8n -1)
     {
         border-bottom: 2px solid black;
     }
 
-    #assignGrades > div:nth-child(8n+1),
-    #assignGrades > div:nth-child(8n+2) {
+    #assignGradesProf > div:nth-child(8n+1),
+    #assignGradesProf > div:nth-child(8n+2) {
         padding-top: 10px;
     }
 
-    #assignGrades > div:nth-child(16n),
-    #assignGrades > div:nth-child(16n -1),
-    #assignGrades > div:nth-child(16n -2),
-    #assignGrades > div:nth-child(16n -3),
-    #assignGrades > div:nth-child(16n -4),
-    #assignGrades > div:nth-child(16n -5),
-    #assignGrades > div:nth-child(16n -6),
-    #assignGrades > div:nth-child(16n -7){
+    #assignGradesProf > div:nth-child(16n),
+    #assignGradesProf > div:nth-child(16n -1),
+    #assignGradesProd > div:nth-child(16n -2),
+    #assignGradesProf > div:nth-child(16n -3),
+    #assignGradesProf > div:nth-child(16n -4),
+    #assignGradesProf > div:nth-child(16n -5),
+    #assignGradesProf > div:nth-child(16n -6),
+    #assignGradesProf > div:nth-child(16n -7){
         background-color: lightgoldenrodyellow;
     }
+
+#assignGradesStu > div:nth-child(6n),
+#assignGradesStu > div:nth-child(6n -1) {
+    border-bottom: 2px solid black;
+}
+
+#assignGradesStu > div:nth-child(6n+1),
+#assignGradesStu > div:nth-child(6n+2) {
+    padding-top: 10px;
+}
+
+#assignGradesStu > div:nth-child(12n),
+#assignGradesStu > div:nth-child(12n -1),
+#assignGradesStu > div:nth-child(12n -2),
+#assignGradesStu > div:nth-child(12n -3),
+#assignGradesStu > div:nth-child(12n -4),
+#assignGradesStu > div:nth-child(12n -5) {
+    background-color: lightgoldenrodyellow;
+}
 
     #assignName{
         float:left;
