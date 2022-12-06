@@ -3,15 +3,16 @@ let studentNames = ['Stavros Halkias', 'Tony Soprano', 'Saul Goodman'];
 let studentNamesHw1 = document.getElementById('studentNamesHw1'); //student names is in its own div so that they are displayed on the left
 //homework 1
 let hw1Grades = document.getElementById('hw1Grades'); //grades and button are in the same div so that they are on the right
+let hw1SaveChangesDiv = document.getElementById('hw1SaveChangesDiv');
+let hw1Invis = document.getElementById('hw1Invis');
 let hw1Button = document.getElementById('hw1');
-
-
-
 
 
 function expandHw1() { //expands homework 1 and displays the names, grades and the save changes button
     studentNamesHw1.classList.remove('hidden');
     hw1Grades.classList.remove('hidden');
+    hw1SaveChangesDiv.classList.remove('hidden');
+    hw1Invis.classList.remove('hidden');
     hw1Button.removeEventListener("click", expandHw1);
     hw1Button.addEventListener("click", collapseHw1);
 }
@@ -19,6 +20,8 @@ function expandHw1() { //expands homework 1 and displays the names, grades and t
 function collapseHw1() { 
     studentNamesHw1.classList.add('hidden');
     hw1Grades.classList.add('hidden');
+    hw1SaveChangesDiv.classList.add('hidden');
+    hw1Invis.classList.add('hidden');
     hw1Button.removeEventListener("click", collapseHw1);
     hw1Button.addEventListener("click", expandHw1);
 }
@@ -30,10 +33,14 @@ hw1Button.addEventListener("click", expandHw1);//base event listener so the butt
 let studentNamesQ1 = document.getElementById('studentNamesQ1');
 let q1Grades = document.getElementById('q1Grades');
 let q1Button = document.getElementById('q1');
+let qSaveChangesDiv = document.getElementById('q1SaveChangesDiv');
+let q1Invis = document.getElementById('q1Invis');
 
 function expandQ1() {
     studentNamesQ1.classList.remove('hidden');
     q1Grades.classList.remove('hidden');
+    q1SaveChangesDiv.classList.remove('hidden');
+    q1Invis.classList.remove('hidden');
     q1Button.removeEventListener("click", expandQ1);
     q1Button.addEventListener("click", collapseQ1);
 }
@@ -41,53 +48,15 @@ function expandQ1() {
 function collapseQ1() {
     studentNamesQ1.classList.add('hidden');
     q1Grades.classList.add('hidden');
+    q1SaveChangesDiv.classList.add('hidden');
+    q1Invis.classList.add('hidden');
     q1Button.removeEventListener("click", collapseQ1);
     q1Button.addEventListener("click", expandQ1);
 }
 
 q1Button.addEventListener("click", expandQ1);
 
-//this is the begining of the menu on the right
-//this is the logic for the add assignment button
-let addAssignText = document.getElementById('addAssignText');
-let addAssignDiv = document.getElementById('addAssignMenu');
 
-function expandAddAssign() {
-    addAssignDiv.innerHTML += '<label for="assignName">Assignment name:</label><input type="text" name = "assignName"><br/>';
-    addAssignDiv.innerHTML += '<label for="assignType">Select assignment type:</label> <select name = "assignType" id = "assignType" class = "dropdown"> <option value="homework" select>Homework</option><option value="quiz">Quiz</option><option value="writingAssignments">Writing Assignments</option> </select ><br/>';
-    addAssignDiv.innerHTML += '<label for="dueDate">Due date:</label><input type="text" name = "dueDate"><br/>';
-    addAssignDiv.innerHTML += '<label for="totalPoints">Point total:</label><input type="text" name = "totalPoints">';
-    addAssignText.removeEventListener("click", expandAddAssign);
-    addAssignText.addEventListener("click", collapseAddAssign);
-}
-
-function collapseAddAssign() {
-    document.getElementById('addAssignMenu').innerHTML = "";
-    addAssignText.removeEventListener("click", collapseAddAssign);
-    addAssignText.addEventListener("click", expandAddAssign);
-}
-
-addAssignText.addEventListener("click", expandAddAssign);
-
-
-//view student grades
-let viewStudentGradesText = document.getElementById('viewStudentGradesText');
-let viewStudentGradesDiv = document.getElementById('viewStudentGradesMenu');
-
-function expandViewStudentGrades() {
-    viewStudentGradesDiv.innerHTML += '<label for="chooseStudentView">Select student:</label> <select name = "chooseStudentView" id = "chooseStudentView" class = "dropdown"><option value="none" select>-</option> <option value="stavros">Stavros Halkias</option><option value="tony">Tony Soprano</option><option value="saul">Saul Goodman</option> </select ><br/>';
-    viewStudentGradesDiv.innerHTML += '<a href="mathStudent.html"><button type="button">View student</button></a>';
-    viewStudentGradesText.removeEventListener("click", expandViewStudentGrades);
-    viewStudentGradesText.addEventListener("click", collapseViewStudentGrades);
-}
-
-function collapseViewStudentGrades() {
-    document.getElementById('viewStudentGradesMenu').innerHTML = "";
-    viewStudentGradesText.removeEventListener("click", collapseViewStudentGrades);
-    viewStudentGradesText.addEventListener("click", expandViewStudentGrades);
-}
-
-viewStudentGradesText.addEventListener("click", expandViewStudentGrades);
 
 //adjust letter scaling
 let adjustLetterScalingText = document.getElementById('adjustLetterScalingText');
@@ -145,6 +114,11 @@ categoriesText.addEventListener("click", expandCategories);
 
 
 $(function () {
-    
+    $('#hw1Grades').on('scroll', function () {
+        $('#studentNamesHw1').scrollTop($(this).scrollTop());
+    });
+    $('#q1Grades').on('scroll', function () {
+        $('#studentNamesQ1').scrollTop($(this).scrollTop());
+    });
 });
 
