@@ -6,7 +6,7 @@
 <body>
     <div id="header">
         <div id="headerText">
-            <h1>English</h1>
+            <h1>Math</h1>
         </div>
         <div id="headerButton">
             <a href="student.html">
@@ -14,34 +14,12 @@
             </a>
         </div>
     </div>
-    <div id="assignments">
-        <!--large div which is the assignments on the left-->
+    <div id="assignments"> <!--large div which is the assignments on the left-->
         <div id="assignHead">
             <h2><u>My Grades</u></h2>
             <div id="blank"></div>
             <div class="textLeft"><h3>Total:</h3></div>
             <div class="textRight"><h3>83.2% : B-</h3></div>
-        </div>
-        <div id="assignGradesStu">
-            <!--assignGrades is a grid container, this grid has a width of two so there is a left and a right, the grid looks at divs so I labelled them left grid and right grid-->
-            <div class="textLeft">Homework 1</div>
-            <div class="textRight">
-                <input type="text" class="gradeNumerator" id="EHomework1" value="20" readonly>/30
-            </div>
-            <div class="textLeft">Type: Homework</div>
-            <div class="textRight">Percent: 60%</div>
-            <div class="textLeft">Due: 11/16/2022</div>
-            <div class="textRight">Submitted: 11/14/2022</div>
-
-            <div class="textLeft">Quiz 1</div>
-            <div class="textRight">
-                <input type="text" class="gradeNumerator" id="EQuiz1" value="93.3" readonly>/100
-            </div>
-            <div class="textLeft">Type: Quiz</div>
-            <div class="textRight">Percent: 93.3%</div>
-            <div class="textLeft">Due: 11/16/2022</div>
-            <div class="textRight">Submitted: 11/14/2022</div>
-
         </div>
     </div>
     <div id="menu">
@@ -74,8 +52,8 @@
         <div id="weightToggleDiv" class="menuItem">
             <div><button type="button" id="weightToggleText" class="menuButton">Toggle grade weights</button></div>
             <div id="weightToggleMenu">
-                <div id="weightedGradeDiv" class="exportButton"><button type="button" id="weightedGrade" class="">Weighted Grades</button></div>
-                <div id="unweightedGradeDiv" class="exportButton"><button type="button" id="unweightedGrade" class="">Unweighted Grades </button></div>
+                <div id="weightedGradeDiv" class="exportButton"><button type="button" id="weightedGrade" class="unselectedWeightButton" onclick="toggleWeight()">Weighted Grades</button></div>
+                <div id="unweightedGradeDiv" class="exportButton"><button type="button" id="unweightedGrade" class="selectedWeightButton" onclick ="toggleUnWeight()">Unweighted Grades </button></div>
             </div>
         </div>
         <div id="selfScaleDiv" class="menuItem">
@@ -89,10 +67,9 @@
     </div>
 
 
-    <script src="../js/jquery-1.11.0.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="../js/studentScripts.js"></script>
-    
+
 
 </body>
 </html>

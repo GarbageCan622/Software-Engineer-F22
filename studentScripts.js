@@ -108,8 +108,8 @@ class Assignment {
 
     // generates the HTML code to display an assignment properly based on the provided grid structure
     toHTMLString(SID) {
-        let grade = fix(100 * (this.grade[SID] / this.points), 3);
-        if (weightOn) { grade = fix((grade * math.categoryWeights[this.category] / 100), 3); } // RWALLY BAD FIX
+        let grade = 100 * fix((this.grade[SID] / this.points), 3);
+        if (weightOn) { grade *= fix((math.categoryWeights[this.category] / 100), 3); } // RWALLY BAD FIX
         str = "";
         str += '<div class="textLeft">' + this.name + '</div>';
         str += '<div class="textRight"><input type = "text" class="gradeNumerator" value="' + this.grade[SID] + '"readonly>/' + this.points + '</div>';
@@ -212,7 +212,7 @@ let courses = [math];
 str = "";
 //head = '<div id="assignHead"><h2><u>My Grades</u></h2><div id="blank"></div><div class="textLeft"><h3>Total:</h3></div><div class="textRight"><h3>83.2% : B</h3></div></div>';
 function genAssignments(course, sid) {
-    let str = '<div id="assignGradesStu">';
+    let str = '<div id="assignGrades">';
     for (assignment of course.assignments) {
         str += assignment.toHTMLString(sid);
     }
@@ -325,7 +325,7 @@ Student.prototype.calculateGradeNeededCategory = function(course, cat, letter) {
 
     // grade needed
     // (Σwici) + wc = g, (g -(Σwici)) / w = c
-    let needed = (grade - sum(catGrades, weights)) / w;
+    needed = (grade - sum(catGrades, weights)) / w;
     return fix(needed, 3);
 
 }
@@ -347,7 +347,7 @@ Student.prototype.enterMockGrade = function(course, assCat, grade) {
     for (ass of course.assignments) nAss += ((ass.category == assCat && ass.isPublished == true) ? 1 : 0);
 
     // update category
-    let newVal = ((catGrades[catDex] * nAss) + grade) / (nAss + 1);
+    newVal = ((catGrades[catDex] * nAss) + grade) / (nAss + 1);
     catGrades[catDex] = newVal;
 
     // update overall grade
@@ -355,11 +355,8 @@ Student.prototype.enterMockGrade = function(course, assCat, grade) {
     let new_grade = sum(catGrades, weights);
     let letter_grade = toLetter(new_grade, course.letterScale, letters);
 
-    //mockDiv.innerHTML += newVal + " : " + new_grade + " : " + letter_grade;
-
     // returns a list, 1st element is numeric category grade, 2nd is numeric overall grade, 3rd is overall letter grade
     return [catGrades[catDex], new_grade, letter_grade];
-    //return -493;
 }
 
 function getAssList(A) {
@@ -456,8 +453,7 @@ function quuz() {
     let grade;
     let grades = document.getElementsByClassName("gradeNumerator");
     mockdex = findMock(math, sandra.SID, grades);
-    grade = (grades[mockdex].value / math.assignments[mockdex].points) * 100;
-    grade = fix(grade, 3);
+    grade = fix(grades[mockdex].value / math.assignments[mockdex].points, 3) * 100;
     mockGrades = sandra.enterMockGrade(math, math.assignments[mockdex].category, grade);
     mockDiv.innerHTML += "Category Grade: " + mockGrades[0] + "</br>";
     mockDiv.innerHTML += "Course Grade: " + mockGrades[1] + "</br>";
@@ -680,6 +676,7 @@ unweightedButton.addEventListener("click", unweightedButtonSelected);
 weightedButton.classList.add('selectedWeightButton');
 unweightedButton.classList.add('unselectedWeightButton');
 
+
 //adjust self scaling button code
 //the logic here gets repeated for each button on the right menu
 let adjustText = document.getElementById('selfScaleText');//this is the button
@@ -720,22 +717,3 @@ function collapseAdjust() {
 
 adjustText.addEventListener("click", expandAdjust);//make sure the button has expandSort() on originally
 
-
-// local storage how-to
-/*
-if (document.getElementById('MHomework1') != null) { //check if id is on this page, really we are checking if we are in mathStudent or englishStudent. If the id is on the page grab the value of the assignment stored in the localStorage and use that as the value
-    document.getElementById('MHomework1').value = localStorage.getItem('MHomework1');
-}
-
-if (document.getElementById('MQuiz1') != null) {
-    document.getElementById('MQuiz1').value = localStorage.getItem('MQuiz1');
-}
-
-if (document.getElementById('EHomework1') != null) {
-    document.getElementById('EHomework1').value = localStorage.getItem('EHomework1');
-}
-
-if (document.getElementById('EQuiz1') != null) {
-    document.getElementById('EQuiz1').value = localStorage.getItem('EQuiz1');
-}
-*/
