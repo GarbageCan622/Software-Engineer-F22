@@ -124,6 +124,11 @@ function calc_overall() {
     document.getElementById('class_avg_text').innerHTML = output;
 }
 
+function load_letter_scale() {
+	let arr = JSON.parse(localStorage.getItem('ELS'));
+	alert(arr[0]);
+}
+
 function to_letter_grade(x) {
 	let out;
 	if(x >= letter_scale[0]) {
