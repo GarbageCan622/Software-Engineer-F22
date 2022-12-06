@@ -119,7 +119,6 @@ $(function () {
 		document.getElementById('cat1').value = weights[0];
 		document.getElementById('cat2').value = weights[1];
 		document.getElementById('cat3').value = weights[2];
-		//set_category_weights();
 	}
 	
 	categoriesText.addEventListener("click", set_category_weights);
