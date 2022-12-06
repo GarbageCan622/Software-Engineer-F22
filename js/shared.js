@@ -12,4 +12,50 @@ if (localStorage.getItem('MQuiz1') == null) {
     localStorage.setItem('MQuiz1', '-');
 }
 
+//English Course
+const EHW1 = new Map();	//English Homework 1
+EHW1.set(1,88.8);	//First value is student ID, second value is grade
+EHW1.set(2,83.2);
+EHW1.set(3,79.9);
 
+const EHW2 = new Map();	//English Homework 2
+EHW1.set(1,100);
+EHW1.set(2,95);
+EHW1.set(3,88);
+
+const EP1 = new Map();	//English Paper 1
+EHW1.set(1,90);
+EHW1.set(2,85);
+EHW1.set(3,82.5);
+
+const EP2 = new Map();	//English Paper 2
+EHW1.set(1,88);
+EHW1.set(2,86.3);
+EHW1.set(3,92.5);
+
+const EFP = new Map();	//English Final Paper
+EHW1.set(1,85.5);
+EHW1.set(2,83);
+EHW1.set(3,84.2);
+
+if (localStorage.getItem('EHW1' == null) {
+	localStorage.setItem('EHW1', JSON.stringify(EHW1));	//In order to store more than just strings, JSON.stringify must be called on the object or data structure
+}
+
+if (localStorage.getItem('EHW2' == null) {
+	localStorage.setItem('EHW2', JSON.stringify(EHW2));
+}
+
+if (localStorage.getItem('EP1' == null) {
+	localStorage.setItem('EP1', JSON.stringify(EP1));
+}
+
+if (localStorage.getItem('EP2' == null) {
+	localStorage.setItem('EP2', JSON.stringify(EP2));
+}
+
+if (localStorage.getItem('EFP' == null) {
+	localStorage.setItem('EFP', JSON.stringify(EFP));
+}
+
+//Math Course
