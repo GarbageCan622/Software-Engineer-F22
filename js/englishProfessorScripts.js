@@ -56,62 +56,6 @@ function collapseQ1() {
 
 q1Button.addEventListener("click", expandQ1);
 
-//this is the begining of the menu on the right
-
-
-//adjust letter scaling
-let adjustLetterScalingText = document.getElementById('adjustLetterScalingText');
-let adjustLetterScalingDiv = document.getElementById('adjustLetterScalingMenu');
-
-function expandAdjustLetterScaling() {
-    adjustLetterScalingDiv.innerHTML += 'Enter upper and lower bounds for letter grades<br/>';
-    adjustLetterScalingDiv.innerHTML += '<label for="uA">Upper A:</label><input type="text" name = "uA"><br/>';
-    adjustLetterScalingDiv.innerHTML += '<label for="lA">Lower A:</label><input type="text" name = "lA"><br/>';
-    adjustLetterScalingDiv.innerHTML += '<label for="uB">Upper B:</label><input type="text" name = "uB"><br/>';
-    adjustLetterScalingDiv.innerHTML += '<label for="lB">Lower B:</label><input type="text" name = "lB"><br/>';
-    adjustLetterScalingDiv.innerHTML += '<label for="uC">Upper C:</label><input type="text" name = "uC"><br/>';
-    adjustLetterScalingDiv.innerHTML += '<label for="lC">Lower C:</label><input type="text" name = "lC"><br/>';
-    adjustLetterScalingDiv.innerHTML += '<label for="uD">Upper D:</label><input type="text" name = "uD"><br/>';
-    adjustLetterScalingDiv.innerHTML += '<label for="lD">Lower D:</label><input type="text" name = "lD"><br/>';
-    adjustLetterScalingDiv.innerHTML += '<label for="F">F:</label><input type="text" name = "F"><br/>';
-    adjustLetterScalingText.removeEventListener("click", expandAdjustLetterScaling);
-    adjustLetterScalingText.addEventListener("click", collapseAdjustLetterScaling);
-}
-
-function collapseAdjustLetterScaling() {
-    document.getElementById('adjustLetterScalingMenu').innerHTML = "";
-    adjustLetterScalingText.removeEventListener("click", collapseAdjustLetterScaling);
-    adjustLetterScalingText.addEventListener("click", expandAdjustLetterScaling);
-}
-
-adjustLetterScalingText.addEventListener("click", expandAdjustLetterScaling);
-
-//categories
-let categoriesText = document.getElementById('categoriesText');
-let categoriesDiv = document.getElementById('categoriesMenu');
-
-function expandCategories() {
-    categoriesDiv.innerHTML += 'Categories:<br/>';
-    categoriesDiv.innerHTML += '<label for="cat1">Homework:</label><input type="text" name = "cat1" value = "35%"><br/>';
-    categoriesDiv.innerHTML += '<label for="cat2">Quizes:</label><input type="text" name = "cat2" value = "25%"><br/>';
-    categoriesDiv.innerHTML += '<label for="cat3">Homework:</label><input type="text" name = "cat3" value = "40%"><br/>';
-    categoriesDiv.innerHTML += '<button type="button" >Add new category</button>';
-    categoriesText.removeEventListener("click", expandCategories);
-    categoriesText.addEventListener("click", collapseCategories);
-}
-
-function collapseCategories() {
-    document.getElementById('categoriesMenu').innerHTML = "";
-    categoriesText.removeEventListener("click", collapseCategories);
-    categoriesText.addEventListener("click", expandCategories);
-}
-
-categoriesText.addEventListener("click", expandCategories);
-
-
-
-
-
 $(function () {
     $('#hw1Grades').on('scroll', function () {
         $('#studentNamesHw1').scrollTop($(this).scrollTop());
@@ -121,3 +65,76 @@ $(function () {
     });
 });
 
+//this is the begining of the menu on the right
+
+/* Variables */ {
+	var name = 'ENGL.1010';
+	var credits = 3;
+	var letter_scale = [];
+	var weights = [];
+}
+
+/*Load from local storage*/ {
+	function loadFromLocal() {	//Calls functions that load from local storage
+		load_letter_scale();
+		load_category_weights();
+	}
+}
+
+/*Letter Scale Functions*/ {
+	function load_letter_scale() {
+		let test = localStorage.getItem('ELS');
+		letter_scale = JSON.parse(test);
+		document.getElementById('Abreak').value = letter_scale[0];
+		document.getElementById('Bbreak').value = letter_scale[1];
+		document.getElementById('Cbreak').value = letter_scale[2];
+		document.getElementById('Dbreak').value = letter_scale[3];
+		//set_letter_scale();
+	}
+
+	adjustLetterScalingText.addEventListener("click", set_letter_scale);
+	function set_letter_scale() {
+		let scale_good = true;
+		letter_scale[0] = document.getElementById('Abreak').value;
+		letter_scale[1] = document.getElementById('Bbreak').value;
+		letter_scale[2] = document.getElementById('Cbreak').value;
+		letter_scale[3] = document.getElementById('Dbreak').value;
+		for(var i = 1; i < letter_scale.length; i++) {
+			if (parseInt(letter_scale[i-1]) <= parseInt(letter_scale[i])) {
+				alert("A higher letter grade cannot have a lower or equal numerical breakpoint than a lower letter grade. Changes cannot be saved.");
+				scale_good = false;
+				i = letter_scale.length;
+			}
+		}
+		if (scale_good == true) {
+			localStorage.setItem('ELS', JSON.stringify(letter_scale));
+			to_letter_grade(calc_overall());
+		}
+	}
+}
+
+/* Category functions*/ {
+	function load_category_weights() {
+		weights = JSON.parse(localStorage.getItem('ECats_num'));
+		document.getElementById('cat1').value = weights[0];
+		document.getElementById('cat2').value = weights[1];
+		document.getElementById('cat3').value = weights[2];
+		//set_category_weights();
+	}
+	
+	categoriesText.addEventListener("click", set_category_weights);
+	function set_category_weights() {
+		weights[0] = document.getElementById('cat1').value;
+		weights[1] = document.getElementById('cat2').value;
+		weights[2] = document.getElementById('cat3').value;
+		const sum = weights.reduce((accumulator, value) => {
+			return accumulator + parseInt(value);
+		}, 0);
+		if (sum != 100) {
+			alert("Category weights must equal 100. Changes cannot be saved.");
+		} else {
+			localStorage.setItem('ECats_num', JSON.stringify(weights));
+		}
+		//call functions needed to recalculate grades
+	}
+}
