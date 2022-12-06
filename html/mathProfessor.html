@@ -32,11 +32,14 @@
             </div>
             <div class="textLeft">Type: Homework</div>
             <div class="textRight">Due: 11/16/2022</div>
-            <div class="textLeft hidden" id="studentNamesHw1">
+            <div class="textLeft hidden studentNames" id="studentNamesHw1">
                 <p>Stavros Halkias<br />Tony Soprano<br />Saul Goodman</p>
             </div><!--2 blank divs so the grid doesnt get messed up, names on the left and grades on the right-->
-            <div class="textRight hidden" id="hw1Grades">
+            <div class="textRight hidden studentGrades" id="hw1Grades">
                 <br /><input type="text" class="gradeNumerator" value="20">/30<br /><input type="text" class="gradeNumerator" value="20">/30<br /><input type="text" class="gradeNumerator" value="20">/30<br />
+            </div>
+            <div id="hw1Invis" class="hidden"></div>
+            <div id="hw1SaveChangesDiv" class="textRight hidden">
                 <button type="button" id="hw1SaveChanges" class="saveChanges">Save changes </button>
             </div>
 
@@ -46,11 +49,14 @@
             </div>
             <div class="textLeft">Type: Quiz</div>
             <div class="textRight">Due: 11/16/2022</div>
-            <div class="textLeft hidden" id="studentNamesQ1">
+            <div class="textLeft hidden studentNames" id="studentNamesQ1">
                 <p>Stavros Halkias<br />Tony Soprano<br />Saul Goodman</p>
             </div>
-            <div class="textRight hidden" id="q1Grades">
-                <br /><input type="text" class="gradeNumerator" value="-">/100<br /><input type="text" class="gradeNumerator" value="-">/100<br /><input type="text" class="gradeNumerator" value="-">/100<br />
+            <div class="textRight hidden studentGrades" id="q1Grades">
+                <br /><input type="text" class="gradeNumerator" value="-">/100<br /><input type="text" class="gradeNumerator" value="-">/100<br /><input type="text" class="gradeNumerator" value="-">/100<br />               
+            </div>
+            <div id="q1Invis" class="hidden"></div>
+            <div id="q1SaveChangesDiv" class="textRight hidden">
                 <button type="button" class="saveChanges">Save changes </button>
             </div>
         </div>
