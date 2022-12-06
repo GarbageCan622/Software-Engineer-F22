@@ -13,6 +13,8 @@ if (localStorage.getItem('MQuiz1') == null) {
 }
 
 //English Course
+const letter_scale = [90, 80, 70, 60];
+
 const EHW1 = new Map();	//English Homework 1
 EHW1.set(1,88.8);	//First value is student ID, second value is grade
 EHW1.set(2,83.2);
