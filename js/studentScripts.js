@@ -23,7 +23,7 @@ function fix(n, d) { return Number(n.toFixed(d)); }
 var sum = function(A, weights = []) {
     let w = (weights == false) ? Array(A.length).fill(1) : weights;
     let sum = 0; for (i = 0; i < A.length; i++) sum += (A[i] * w[i]);
-    return fix(sum, 2);
+    return sum;
 }
 
 // count sort
@@ -50,7 +50,7 @@ const homework_grades = new Map();
 const quiz_grades = new Map();
 const exam_grades = new Map();
 const cat_temp = new Map();
-const writing_assignments = new Map();
+const classwork = new Map();
 
 //Add Values
 //{
@@ -79,17 +79,17 @@ const writing_assignments = new Map();
     exam_grades[3] = 86;
     exam_grades[4] = 87;
 
-    writing_assignments[1] = 70;
+    classwork[1] = 70;
 
-    cat_temp["classwork"] = homework_grades;
-    cat_temp["Quiz"] = quiz_grades;
-    cat_temp["Exam"] = exam_grades;
-    cat_temp["Writing Assignments"] = writing_assignments;
+    cat_temp["homework"] = homework_grades;
+    cat_temp["quiz"] = quiz_grades;
+    cat_temp["exam"] = exam_grades;
+    cat_temp["classwork"] = classwork;
 //}
 
 //Lists
-const assignment_categories = ["Homework", "Quiz", "Exam", "Writing Assignments"];
-const category_grades = [homework_grades, quiz_grades, exam_grades, writing_assignments];
+const assignment_categories = ["classwork", "homework", "quiz", "exam"];
+const category_grades = [classwork, homework_grades, quiz_grades, exam_grades]; //list of maps dipshit
 
 // IMLPEMENT USER CLASS IN HERE TOO
 class Student {
@@ -121,8 +121,8 @@ class Assignment {
         str += '<div class="textRight"><input type = "text" class="gradeNumerator" value="' + this.grade[SID] + '"readonly>/' + this.points + '</div>';
         str += '<div class="textLeft">Category: ' + this.category + '</div>';
         str += '<div class="textRight">Grade: ' + grade + '</div>';
-        //str += '<div class="textLeft">Due Date: ' + this.dueDate + '</div>';
-        //str += '<div class="textRight">Submitted: ' + this.submitDate[SID] + '</div>';
+        str += '<div class="textLeft"></div>';
+        str += '<div class="textRight"></div>';
         return str;
     }
 
@@ -158,7 +158,7 @@ class Course {
         // overall grades, category grades
         this.overallGrades = {};
         this.categoryGrades = new Map();
-        for (let cat of this.categories) { this.categoryGrades.set(cat, new Array(1).fill(-493)); }
+        for (let cat of this.categories) { this.categoryGrades[cat] = {}; }
     }
     toHTMLString(sid) {
         let grade = this.overallGrades[sid];
@@ -214,9 +214,10 @@ math.setAssignment("Homework 1", MSIDs, MHW1, "homework");
 math.setAssignment("Homework 2", MSIDs, MHW2, "homework");
 math.setAssignment("Quiz 1", MSIDs, MQ1, "quiz");
 math.setAssignment("Exam 1", MSIDs, ME1, "exam");
-math.getCategoryGrades(MSIDs);
+//math.getCategoryGrades(MSIDs);
 //math.getOverallGrades(MSIDs);
-console.log(math.categoryGrades['quiz']);
+math.categoryGrades = cat_temp;
+math.overallGrades = overall_grades;
 
 // further lists
 let courses = [math];
@@ -299,7 +300,7 @@ Student.prototype.adjustSelfScaling = function(course, scale) {
 // calculate from letter grade, given an assignment
 
 var getMinGrade = function(scale, letter) {
-    return fix(scale[letters.indexOf(letter)], 3);
+    return scale[letters.indexOf(letter)];
 }
 Student.prototype.calculateGradeNeededAssignment = function(course, cat, letter) {
     // convert letter grade to numeric form, minimum 
@@ -312,7 +313,7 @@ Student.prototype.calculateGradeNeededAssignment = function(course, cat, letter)
     }
 
     // ((Σa) + x) / n = g, gn - Σa = x 
-    return fix(((grade * (nAss + 1)) - sum), 2);
+    return (grade * (nAss + 1)) - sum;
 }
 
 Student.prototype.calculateGradeNeededCategory = function(course, cat, letter) {
@@ -333,7 +334,7 @@ Student.prototype.calculateGradeNeededCategory = function(course, cat, letter) {
     // grade needed
     // (Σwici) + wc = g, (g -(Σwici)) / w = c
     let needed = (grade - sum(catGrades, weights)) / w;
-    return fix(needed, 3);
+    return needed;
 
 }
 
