@@ -99,8 +99,8 @@ $(function () {
 		letter_scale[1] = document.getElementById('Bbreak').value;
 		letter_scale[2] = document.getElementById('Cbreak').value;
 		letter_scale[3] = document.getElementById('Dbreak').value;
-		for (var i = 1; i < letter_scale.length; i++) {
-			if (letter_scale[i] == "") {
+		for (var i = 0; i < letter_scale.length; i++) {
+			if (!letter_scale[i] || letter_scale[i].length == 0) {
 				alert("Letter scale field was blank. Changes cannot be saved.");
 				scale_good = false;
 				i = letter_scale.length;
