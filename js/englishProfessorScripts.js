@@ -29,39 +29,102 @@ function collapseHw1() {
 hw1Button.addEventListener("click", expandHw1);//base event listener so the button works from the begining 
 
 
-//Quiz 1, same logic as homework 1
-let studentNamesQ1 = document.getElementById('studentNamesQ1');
-let q1Grades = document.getElementById('q1Grades');
-let q1Button = document.getElementById('q1');
-let qSaveChangesDiv = document.getElementById('q1SaveChangesDiv');
-let q1Invis = document.getElementById('q1Invis');
+//HW2
+let studentNamesHw2 = document.getElementById('studentNamesHw2');
+let hw2Grades = document.getElementById('hw2Grades');
+let hw2Button = document.getElementById('hw2');
+let hw2SaveChangesDiv = document.getElementById('hw2SaveChangesDiv');
+let hw2Invis = document.getElementById('hw2Invis');
 
-function expandQ1() {
-    studentNamesQ1.classList.remove('hidden');
-    q1Grades.classList.remove('hidden');
-    q1SaveChangesDiv.classList.remove('hidden');
-    q1Invis.classList.remove('hidden');
-    q1Button.removeEventListener("click", expandQ1);
-    q1Button.addEventListener("click", collapseQ1);
+function expandHw2() {
+    studentNamesHw2.classList.remove('hidden');
+    hw2Grades.classList.remove('hidden');
+    hw2SaveChangesDiv.classList.remove('hidden');
+    hw2Invis.classList.remove('hidden');
+    hw2Button.removeEventListener("click", expandHw2);
+    hw2Button.addEventListener("click", collapseHw2);
 }
 
-function collapseQ1() {
-    studentNamesQ1.classList.add('hidden');
-    q1Grades.classList.add('hidden');
-    q1SaveChangesDiv.classList.add('hidden');
-    q1Invis.classList.add('hidden');
-    q1Button.removeEventListener("click", collapseQ1);
-    q1Button.addEventListener("click", expandQ1);
+function collapseHw2() {
+    studentNamesHw2.classList.add('hidden');
+    hw2Grades.classList.add('hidden');
+    hw2SaveChangesDiv.classList.add('hidden');
+    hw2Invis.classList.add('hidden');
+    hw2Button.removeEventListener("click", collapseHw2);
+    hw2Button.addEventListener("click", expandHw2);
 }
 
-q1Button.addEventListener("click", expandQ1);
+hw2Button.addEventListener("click", expandHw2);
+
+
+//P1
+let studentNamesP1 = document.getElementById('studentNamesP1');
+let p1Grades = document.getElementById('p1Grades');
+let p1Button = document.getElementById('p1');
+let p1SaveChangesDiv = document.getElementById('p1SaveChangesDiv');
+let p1Invis = document.getElementById('p1Invis');
+
+function expandP1() {
+    studentNamesP1.classList.remove('hidden');
+    p1Grades.classList.remove('hidden');
+    p1SaveChangesDiv.classList.remove('hidden');
+    p1Invis.classList.remove('hidden');
+    p1Button.removeEventListener("click", expandP1);
+    p1Button.addEventListener("click", collapseP1);
+}
+
+function collapseP1() {
+    studentNamesP1.classList.add('hidden');
+    p1Grades.classList.add('hidden');
+    p1SaveChangesDiv.classList.add('hidden');
+    p1Invis.classList.add('hidden');
+    p1Button.removeEventListener("click", collapseP1);
+    p1Button.addEventListener("click", expandP1);
+}
+
+p1Button.addEventListener("click", expandP1);
+
+
+
+//FP
+let studentNamesFp = document.getElementById('studentNamesFp');
+let fpGrades = document.getElementById('fpGrades');
+let fpButton = document.getElementById('fp');
+let fpSaveChangesDiv = document.getElementById('fpSaveChangesDiv');
+let fpInvis = document.getElementById('fpInvis');
+
+function expandFP() {
+    studentNamesFp.classList.remove('hidden');
+    fpGrades.classList.remove('hidden');
+    fpSaveChangesDiv.classList.remove('hidden');
+    fpInvis.classList.remove('hidden');
+    fpButton.removeEventListener("click", expandFP);
+    fpButton.addEventListener("click", collapseFP);
+}
+
+function collapseFP() {
+    studentNamesFp.classList.add('hidden');
+    fpGrades.classList.add('hidden');
+    fpSaveChangesDiv.classList.add('hidden');
+    fpInvis.classList.add('hidden');
+    fpButton.removeEventListener("click", collapseFP);
+    fpButton.addEventListener("click", expandFP);
+}
+
+fpButton.addEventListener("click", expandFP);
 
 $(function () {
     $('#hw1Grades').on('scroll', function () {
         $('#studentNamesHw1').scrollTop($(this).scrollTop());
     });
-    $('#q1Grades').on('scroll', function () {
-        $('#studentNamesQ1').scrollTop($(this).scrollTop());
+    $('#hw2Grades').on('scroll', function () {
+        $('#studentNamesHw2').scrollTop($(this).scrollTop());
+    });
+	$('#p1Grades').on('scroll', function () {
+        $('#studentNamesP1').scrollTop($(this).scrollTop());
+    });
+	$('#fpGrades').on('scroll', function () {
+        $('#studentNamesFp').scrollTop($(this).scrollTop());
     });
 });
 
@@ -78,6 +141,10 @@ $(function () {
 	function loadFromLocal() {	//Calls functions that load from local storage
 		load_letter_scale();
 		load_category_weights();
+		load_assignment_grades('EHW1');
+		load_assignment_grades('EHW2');
+		load_assignment_grades('EP1');
+		load_assignment_grades('EFP');
 	}
 }
 
@@ -139,6 +206,60 @@ $(function () {
 		} else {
 			localStorage.setItem('ECats_num', JSON.stringify(weights));
 		}
-		//call functions needed to recalculate grades
+		calc_overall();
 	}
+}
+
+/*Assignment Functions*/ {
+	function load_assignment_grades(name) {			//name is local storage key (ex. MHW1, ME1)
+		grades = JSON.parse(localStorage.getItem(name));
+		for(var i = 0; i < 10; i++) {				//Hard coded for 10 students
+			document.getElementById(name + i).value = grades[i];
+		}
+	}
+	
+	function set_assignment_grades(name) {
+		for(var i = 0; i < 10; i++) {
+			grades[i] = document.getElementById(name + i).value;
+		}
+		localStorage.setItem(name, JSON.stringify(grades));
+	}
+	
+	assSaveChanges.addEventListener("click", set_all);
+	function set_all() {
+		set_assignment_grades('EHW1');
+		set_assignment_grades('EHW2');
+		set_assignment_grades('EP1');
+		set_assignment_grades('EFP');
+		alert("Grades saved!");
+		calc_overall();
+	}
+}
+
+function calc_overall() {	//Hard coded for math sections
+	overall = (weights[0]/100) * calc_category('EHW') + (weights[1]/100) * calc_category('EP') + (weights[2]/100) * calc_category('EFP');
+	document.getElementById('class_avg_text').innerHTML = overall.toFixed(2);
+	return overall;
+}
+
+function calc_category(name) {		//name is local storage key w/o any numbers (ex. MHW, ME)
+	var sum = 0;
+	var itt = 0;
+	var j = 1;
+	if (localStorage.getItem(name) != null) {
+		for(var i = 0; i < 10; i++) {
+			sum += parseFloat(grades[i]);
+			itt++;
+		}
+	}
+	while (localStorage.getItem(name + j) != null) {	//Iterate through every set in the category
+		grades = JSON.parse(localStorage.getItem(name+j));
+		for(var i = 0; i < 10; i++) {
+			sum += parseFloat(grades[i]);
+			//alert(grades[i]);
+			itt++;
+		}
+		j++;
+	}
+	return sum/itt;
 }

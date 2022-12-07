@@ -18,7 +18,9 @@
 		<!--large div which is the assignments on the left-->
         <div id="assignHead">
             <h2><u>Published Assignments</u></h2>
-            <div id="blank"></div>
+            <div class="textRight" id="saveAssButton">
+				<button type="button" id="assSaveChanges" class="saveChanges">Save Grade Changes </button>
+			</div>
             <div class="textLeft"><h3>Class average:</h3></div>
             <div class="textRight">
                 <h3><span id="class_avg_text"></span> : <span id="class_letter_text"></span></h3>
@@ -31,7 +33,7 @@
             <div class="textRight">
                 <button type="button" id="hw1" class="editGrades">Edit grades </button>
             </div>
-            <div class="textLeft">Type: Homework</div>
+            <div class="textLeft">Category: Homework</div>
             <div class="textRight">Due: 11/16/2022</div>
             <div class="textLeft hidden studentNames" id="studentNamesHw1">
                 <p>
@@ -49,31 +51,30 @@
             </div><!--2 blank divs so the grid doesnt get messed up, names on the left and grades on the right-->
             <div class="textRight hidden studentGrades" id="hw1Grades">
                 <br />
-				<input type="text" class="gradeNumerator" value="20">/30<br class="line"/>
-				<input type="text" class="gradeNumerator" value="20">/30<br class="line"/>
-				<input type="text" class="gradeNumerator" value="20">/30<br class="line"/>
-                <input type="text" class="gradeNumerator" value="20">/30<br class="line"/>
-				<input type="text" class="gradeNumerator" value="20">/30<br class="line"/>
-				<input type="text" class="gradeNumerator" value="20">/30<br class="line"/>
-                <input type="text" class="gradeNumerator" value="20">/30<br class="line"/>
-				<input type="text" class="gradeNumerator" value="20">/30<br class="line"/>
-				<input type="text" class="gradeNumerator" value="20">/30<br class="line"/>
-                <input type="text" class="gradeNumerator" value="20">/30<br />
+				<input type="text" id="EHW10" class="gradeNumerator" value="">/100<br class="line"/>
+				<input type="text" id="EHW11" class="gradeNumerator" value="">/100<br class="line"/>
+				<input type="text" id="EHW12" class="gradeNumerator" value="">/100<br class="line"/>
+                <input type="text" id="EHW13" class="gradeNumerator" value="">/100<br class="line"/>
+				<input type="text" id="EHW14" class="gradeNumerator" value="">/100<br class="line"/>
+				<input type="text" id="EHW15" class="gradeNumerator" value="">/100<br class="line"/>
+                <input type="text" id="EHW16" class="gradeNumerator" value="">/100<br class="line"/>
+				<input type="text" id="EHW17" class="gradeNumerator" value="">/100<br class="line"/>
+				<input type="text" id="EHW18" class="gradeNumerator" value="">/100<br class="line"/>
+                <input type="text" id="EHW19" class="gradeNumerator" value="">/100<br />
             </div>
             <div id="hw1Invis" class="hidden"></div>
             <div id="hw1SaveChangesDiv" class="textRight hidden">
-                <button type="button" id="hw1SaveChanges" class="saveChanges">Save changes </button>
             </div>
 
 
 
-            <div class="textLeft">Quiz 1</div>
+            <div class="textLeft">Homework 2</div>
             <div class="textRight">
-                <button type="button" id="q1" class="editGrades">Edit grades </button>
+                <button type="button" id="hw2" class="editGrades">Edit grades </button>
             </div>
-            <div class="textLeft">Type: Quiz</div>
-            <div class="textRight">Due: 11/16/2022</div>
-            <div class="textLeft hidden studentNames" id="studentNamesQ1">
+            <div class="textLeft">Category: Homework</div>
+            <div class="textRight">Due: 11/23/2022</div>
+            <div class="textLeft hidden studentNames" id="studentNamesHw2">
                 <p>
 					Stavros Halkias<br class="line" />
 					Tony Soprano<br class="line" />
@@ -86,22 +87,95 @@
 					Harry Potter<br class="line" />
 					Bruce Wayne</p>
             </div>
-            <div class="textRight hidden studentGrades" id="q1Grades">
+            <div class="textRight hidden studentGrades" id="hw2Grades">
                 <br />
-				<input type="text" class="gradeNumerator" value="-">/100<br class="line" />
-				<input type="text" class="gradeNumerator" value="-">/100<br class="line" />
-				<input type="text" class="gradeNumerator" value="-">/100<br class="line" />
-                <input type="text" class="gradeNumerator" value="-">/100<br class="line" />
-				<input type="text" class="gradeNumerator" value="-">/100<br class="line" />
-				<input type="text" class="gradeNumerator" value="-">/100<br class="line" />
-                <input type="text" class="gradeNumerator" value="-">/100<br class="line" />
-				<input type="text" class="gradeNumerator" value="-">/100<br class="line" />
-				<input type="text" class="gradeNumerator" value="-">/100<br class="line" />
-                <input type="text" class="gradeNumerator" value="-">/100<br />
+				<input type="text" id="EHW20" class="gradeNumerator" value="">/100<br class="line" />
+				<input type="text" id="EHW21" class="gradeNumerator" value="">/100<br class="line" />
+				<input type="text" id="EHW22" class="gradeNumerator" value="">/100<br class="line" />
+                <input type="text" id="EHW23" class="gradeNumerator" value="">/100<br class="line" />
+				<input type="text" id="EHW24" class="gradeNumerator" value="">/100<br class="line" />
+				<input type="text" id="EHW25" class="gradeNumerator" value="">/100<br class="line" />
+                <input type="text" id="EHW26" class="gradeNumerator" value="">/100<br class="line" />
+				<input type="text" id="EHW27" class="gradeNumerator" value="">/100<br class="line" />
+				<input type="text" id="EHW28" class="gradeNumerator" value="">/100<br class="line" />
+                <input type="text" id="EHW29" class="gradeNumerator" value="">/100<br />
             </div>
-            <div id="q1Invis" class="hidden"></div>
-            <div id="q1SaveChangesDiv" class="textRight hidden">
-                <button type="button" class="saveChanges">Save changes </button>
+            <div id="hw2Invis" class="hidden"></div>
+            <div id="hw2SaveChangesDiv" class="textRight hidden">
+            </div>
+			
+			
+			
+			<div class="textLeft">Paper 1</div>
+            <div class="textRight">
+                <button type="button" id="p1" class="editGrades">Edit grades </button>
+            </div>
+            <div class="textLeft">Category: Paper</div>
+            <div class="textRight">Due: 11/30/2022</div>
+            <div class="textLeft hidden studentNames" id="studentNamesP1">
+                <p>
+					Stavros Halkias<br class="line" />
+					Tony Soprano<br class="line" />
+					Saul Goodman<br class="line" />
+					John Snow<br class="line" />
+					Rhaenyra Targaryen<br class="line" />
+					Elton John<br class="line" />
+					Dunkin Idaho<br class="line" />
+					Quincy Adams<br class="line" />
+					Harry Potter<br class="line" />
+					Bruce Wayne</p>
+            </div>
+            <div class="textRight hidden studentGrades" id="p1Grades">
+                <br />
+				<input type="text" id="EP10" class="gradeNumerator" value="">/100<br class="line" />
+				<input type="text" id="EP11" class="gradeNumerator" value="">/100<br class="line" />
+				<input type="text" id="EP12" class="gradeNumerator" value="">/100<br class="line" />
+                <input type="text" id="EP13" class="gradeNumerator" value="">/100<br class="line" />
+				<input type="text" id="EP14" class="gradeNumerator" value="">/100<br class="line" />
+				<input type="text" id="EP15" class="gradeNumerator" value="">/100<br class="line" />
+                <input type="text" id="EP16" class="gradeNumerator" value="">/100<br class="line" />
+				<input type="text" id="EP17" class="gradeNumerator" value="">/100<br class="line" />
+				<input type="text" id="EP18" class="gradeNumerator" value="">/100<br class="line" />
+                <input type="text" id="EP19" class="gradeNumerator" value="">/100<br />
+            </div>
+            <div id="p1Invis" class="hidden"></div>
+            <div id="p1SaveChangesDiv" class="textRight hidden">
+            </div>
+			
+			<div class="textLeft">Final Paper</div>
+            <div class="textRight">
+                <button type="button" id="fp" class="editGrades">Edit grades </button>
+            </div>
+            <div class="textLeft">Category: Final Paper</div>
+            <div class="textRight">Due: 12/18/2022</div>
+            <div class="textLeft hidden studentNames" id="studentNamesFp">
+                <p>
+					Stavros Halkias<br class="line" />
+					Tony Soprano<br class="line" />
+					Saul Goodman<br class="line" />
+					John Snow<br class="line" />
+					Rhaenyra Targaryen<br class="line" />
+					Elton John<br class="line" />
+					Dunkin Idaho<br class="line" />
+					Quincy Adams<br class="line" />
+					Harry Potter<br class="line" />
+					Bruce Wayne</p>
+            </div>
+            <div class="textRight hidden studentGrades" id="fpGrades">
+                <br />
+				<input type="text" id="EFP0" class="gradeNumerator" value="">/100<br class="line" />
+				<input type="text" id="EFP1"class="gradeNumerator" value="">/100<br class="line" />
+				<input type="text" id="EFP2"class="gradeNumerator" value="">/100<br class="line" />
+                <input type="text" id="EFP3"class="gradeNumerator" value="">/100<br class="line" />
+				<input type="text" id="EFP4"class="gradeNumerator" value="">/100<br class="line" />
+				<input type="text" id="EFP5"class="gradeNumerator" value="">/100<br class="line" />
+                <input type="text" id="EFP6"class="gradeNumerator" value="">/100<br class="line" />
+				<input type="text" id="EFP7"class="gradeNumerator" value="">/100<br class="line" />
+				<input type="text" id="EFP8"class="gradeNumerator" value="">/100<br class="line" />
+                <input type="text" id="EFP9"class="gradeNumerator" value="">/100<br />
+            </div>
+            <div id="fpInvis" class="hidden"></div>
+            <div id="fpSaveChangesDiv" class="textRight hidden">
             </div>
         </div>
     </div>
