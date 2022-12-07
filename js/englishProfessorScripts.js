@@ -263,3 +263,74 @@ function calc_category(name) {		//name is local storage key w/o any numbers (ex.
 	}
 	return sum/itt;
 }
+
+/*Calc Stats*/ {
+	publishStats.addEventListener("click", calc_statistics);
+	
+	var calc_grades = [];
+
+	function calc_statistics() {	//this function calls the 5 helper files, and handles the email's to and body fields
+		assignment = document.getElementById('publishAssignment').value;
+		grades = JSON.parse(localStorage.getItem(assignment));
+		
+		let output = [mean(), median(), standard_deviation(), max(), min()];
+		let toString = 	"Mean: " + output[0].toFixed(2) + "%0D%0A" + "Median: " + output[1].toFixed(2) + "%0D%0A" + 
+				"Standard Deviation: " + output[2].toFixed(2) + "%0D%0A" + "Max: " + output[3].toFixed(2) + "%0D%0A" + "Min: " + output[4].toFixed(2) + "%0D%0A"; 
+		document.getElementById("mailto_field").href = "mailto:?body=" + toString;
+	}   
+
+	function mean() {	//This and the other 4 helper fils use the local attributes defined above in this file
+		sum = 0;
+		for (let i = 0; i < 10; i++) {
+			sum += parseFloat(grades[i]);
+		}
+		return (sum / 10);
+	}       
+	
+	function median() {
+		temp = [];
+		for (let i = 0; i < 10; i++) {
+			temp.push(parseFloat(grades[i]));
+		}
+		temp.sort();
+		for (let i = 0; i < temp.size; i++) {
+			document.write(temp[i]);
+		}
+		if (temp.length % 2 == 0) {
+			return (temp[(temp.length / 2) - 1] + temp[temp.length / 2]) / 2;
+		} else {
+			return temp[(temp.length / 2) - 0.5];
+		}
+	}       
+	function min() {
+		temp = [];
+		for (let i = 0; i < 10; i++) {
+			temp.push(parseFloat(grades[i]));
+		}
+		return Math.min(...temp);
+	}       
+	function max() {
+		temp = [];
+		for (let i = 0; i < 10; i++) {
+			temp.push(parseFloat(grades[i]));
+		}
+		return Math.max(...temp);
+	}   
+	function standard_deviation() {
+		let average = mean();
+		let sum = 0;
+		temp = [];
+
+		for (let i = 0; i < 10; i++) {
+			temp.push(parseFloat(grades[i]));
+		}
+
+		for (let i = 0; i < temp.length; i++) {
+			temp[i] = Math.round((average - temp[i]) * 100) / 100;
+			temp[i] = temp[i] * temp[i];
+			sum += temp[i];
+		}
+
+		return Math.round((Math.sqrt(sum / (temp.length - 1))) * 100) / 100;
+	}
+}

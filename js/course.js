@@ -51,7 +51,6 @@ const category_grades = [homework_grades, quiz_grades, exam_grades];
 
 
 //overall_grade Functions
-classStatisticsText.addEventListener("click", calc_statistics);
 
 function calc_statistics() {	//this function calls the 5 helper files, and handles the email's to and body fields
    	let output = [mean(), median(), standard_deviation(), max(), min()];
