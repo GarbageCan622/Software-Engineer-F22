@@ -99,7 +99,12 @@ $(function () {
 		letter_scale[1] = document.getElementById('Bbreak').value;
 		letter_scale[2] = document.getElementById('Cbreak').value;
 		letter_scale[3] = document.getElementById('Dbreak').value;
-		for(var i = 1; i < letter_scale.length; i++) {
+		for (var i = 1; i < letter_scale.length; i++) {
+			if (letter_scale[i] == "") {
+				alert("Letter scale field was blank. Changes cannot be saved.");
+				scale_good = false;
+				i = letter_scale.length;
+			}
 			if (parseInt(letter_scale[i-1]) <= parseInt(letter_scale[i])) {
 				alert("A higher letter grade cannot have a lower or equal numerical breakpoint than a lower letter grade. Changes cannot be saved.");
 				scale_good = false;

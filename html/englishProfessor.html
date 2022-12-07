@@ -114,44 +114,52 @@
         </div>
         <div id="classStatisticsDiv" class="menuItem">
             <a id="mailto_field" href=""><button type="button" id="classStatisticsText" class="menuButton" href="">Publish class statistics </button></a>
-            <div> Enter your email: <input id="mailto_email" type="text"/></div>
+            <div id="mailText"> Enter your email: <input id="mailto_email" type="text"/></div>
             <div>(Full implementation would send statistics to Blackboard mail list)</div>
         </div>
         <div id="adjustLetterScalingDiv" class="menuItem">
-            <div><button type="button" id="adjustLetterScalingText" class="menuButton">Adjust letter scaling </button></div>
+            <div><button type="button"  class="menuButton">Adjust letter scaling </button></div>
             <div id="adjustLetterScalingMenu">
-				<div class="textLeft" id="letters">
+				<div class="textLeft lineupText" id="letters">
 				<p>
-					A<br />
-					B<br />
-					C<br />
+					A<br class="space"/>
+					B<br class="space"/>
+					C<br class="space"/>
 					D<br />
 				</p>
 				</div><!--2 blank divs so the grid doesnt get messed up, names on the left and grades on the right-->
-				<div class="textRight">
+				<div class="textRight lineupInput">
 					<br /><input id="Abreak" type="text" class="gradeNumerator" value="">
 					<br /><input id="Bbreak" type="text" class="gradeNumerator" value="">
 					<br /><input id="Cbreak" type="text" class="gradeNumerator" value="">
 					<br /><input id="Dbreak" type="text" class="gradeNumerator" value=""><br />
 				</div>
+                <div></div>
+                <div class="saveChangesButton textRight">
+                    <button type="button" id="adjustLetterScalingText" >Save changes </button>
+                </div>
 			</div>
         </div>
         <div id="categoriesDiv" class="menuItem">
-            <div><button type="button" id="categoriesText" class="menuButton">Adjust assignment categories </button></div>
+            <div><button type="button"  class="menuButton">Adjust assignment categories </button></div>
             <div id="categoriesMenu">
-				<div class="textLeft" id="categories">
-				<p>
-					Homework<br />
-					Paper<br />
-					Final Paper
-				</p>
-				</div><!--2 blank divs so the grid doesnt get messed up, names on the left and grades on the right-->
-				<div class="textRight" id="category_weights">
-					<br /><input type="text" id="cat1" class="gradeNumerator" value="">
-					<br /><input type="text" id="cat2" class="gradeNumerator" value="">
-					<br /><input type="text" id="cat3" class="gradeNumerator" value=""><br />
-				</div>
-			</div>
+                <div class="textLeft lineupText" id="categories">
+                    <p>
+                        Homework<br class="space" />
+                        Paper<br class="space" />
+                        Final Paper
+                    </p>
+                </div><!--2 blank divs so the grid doesnt get messed up, names on the left and grades on the right-->
+                <div class="textRight lineupInput" id="category_weights">
+                    <br /><input type="text" id="cat1" class="gradeNumerator" value="">
+                    <br /><input type="text" id="cat2" class="gradeNumerator" value="">
+                    <br /><input type="text" id="cat3" class="gradeNumerator" value=""><br />
+                </div>
+                <div></div>
+                <div class="saveChangesButton textRight">
+                    <button type="button" id="categoriesText" >Save changes </button>
+                </div>
+            </div>
         </div>
 
 
