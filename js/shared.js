@@ -73,9 +73,9 @@ if (localStorage.getItem('MQuiz1') == null) {
 		localStorage.setItem('MSIDs', JSON.stringify(MSIDs));
 	}
 	
-	var CW1 = [100,100,100,100,100,90,100,80,90,90];		//Classwork 1
-	if (localStorage.getItem('CW1') == null) {
-		localStorage.setItem('CW1', JSON.stringify(CW1));
+	var MCW1 = [100,100,100,100,100,90,100,80,90,90];		//Classwork 1
+	if (localStorage.getItem('MCW1') == null) {
+		localStorage.setItem('MCW1', JSON.stringify(MCW1));
 	}
 	
 	var CW2 = ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'];	//Classwork 2
