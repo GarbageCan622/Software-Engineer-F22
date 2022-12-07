@@ -182,14 +182,24 @@
     <div id="menu">         
 		<!--large div which is the menu on the right-->
         <div id="studentViewDiv" class="menuItem">
-            <a href="studentPreview.html">
+            <a href="studentPreviewEngl.html">
                 <button type="button" id="studentViewText" class="menuButton">Enter Student Preview </button>
             </a>
         </div>
         <div id="classStatisticsDiv" class="menuItem">
-            <a id="mailto_field" href=""><button type="button" id="classStatisticsText" class="menuButton" href="">Publish class statistics </button></a>
-            <div id="mailText"> Enter your email: <input id="mailto_email" type="text"/></div>
+			<button type="button" id="classStatisticsText" class="menuButton" href="">Publish class statistics </button>
+            <!--<div id="mailText"> Enter your email: <input id="mailto_email" type="text"/></div>-->
+			<label for="assignment">Select an Assignment:</label>
+				<select id="publishAssignment">
+					<option value="EHW1">Homework 1</option>
+					<option value="EHW2">Homework 2</option>
+					<option value="EP1">Paper 1</option>
+					<option value="EFP">Final Paper</option>
+				</select>
+				<br><br>
             <div>(Full implementation would send statistics to Blackboard mail list)</div>
+			<a id="mailto_field" href=""><button type="button" id="publishStats">Send Email</button></a>
+			<div class="saveChangesButton textRight"></div>
         </div>
         <div id="adjustLetterScalingDiv" class="menuItem">
             <div><button type="button"  class="menuButton">Adjust letter scaling </button></div>
