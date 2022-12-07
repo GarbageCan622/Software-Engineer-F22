@@ -18,7 +18,9 @@
 		<!--large div which is the assignments on the left-->
         <div id="assignHead">
             <h2><u>Published Assignments</u></h2>
-            <div id="blank"></div>
+            <div class="textRight" id="saveAssButton">
+				<button type="button" id="assSaveChanges" class="saveChanges">Save Grade Changes </button>
+			</div>
             <div class="textLeft"><h3>Class average:</h3></div>
             <div class="textRight">
                 <h3><span id="class_avg_text"></span> : <span id="class_letter_text"></span></h3>
@@ -27,44 +29,134 @@
         <div id="assignGradesProf">
             <!--assignGrades is a grid container, this grid has a width of two so there is a left and a right, the grid looks at divs so I labelled them leftText and rightText-->
 
+			<div class="textLeft">Classwork 1</div>
+            <div class="textRight">
+                <button type="button" id="cw1" class="editGrades">Edit grades </button>
+            </div>
+            <div class="textLeft">Category: Classwork</div>
+            <div class="textRight">Due: 11/16/2022</div>
+            <div class="textLeft hidden studentNames" id="studentNamesCw1">
+                <p>Stavros Halkias<br class="line" />Tony Soprano<br class="line"/>Saul Goodman<br class="line"/>John Snow<br class="line"/>Rhaenyra Targaryen<br class="line"/>Elton John<br class="line"/>Dunkin Idaho<br class="line"/>Quincy Adams<br class="line"/>Harry Potter<br class="line"/>Bruce Wayne</p>
+            </div><!--2 blank divs so the grid doesnt get messed up, names on the left and grades on the right-->
+            <div class="textRight hidden studentGrades" id="cw1Grades">
+                <br />
+					<input type="text" id="MCW10" class="gradeNumerator" value="">/100<br class="line"/>
+					<input type="text" id="MCW11" class="gradeNumerator" value="">/100<br class="line"/>
+					<input type="text" id="MCW12" class="gradeNumerator" value="">/100<br class="line"/>
+					<input type="text" id="MCW13" class="gradeNumerator" value="">/100<br class="line"/>
+					<input type="text" id="MCW14" class="gradeNumerator" value="">/100<br class="line"/>
+					<input type="text" id="MCW15" class="gradeNumerator" value="">/100<br class="line"/>
+					<input type="text" id="MCW16" class="gradeNumerator" value="">/100<br class="line"/>
+					<input type="text" id="MCW17" class="gradeNumerator" value="">/100<br class="line"/>
+					<input type="text" id="MCW18" class="gradeNumerator" value="">/100<br class="line"/>
+					<input type="text" id="MCW19" class="gradeNumerator" value="">/100<br />
+            </div>
+            <div id="cw1Invis" class="hidden"></div>
+            <div id="cw1SaveChangesDiv" class="textRight hidden">
+            </div>
+
             <div class="textLeft">Homework 1</div>
             <div class="textRight">
                 <button type="button" id="hw1" class="editGrades">Edit grades </button>
             </div>
-            <div class="textLeft">Type: Homework</div>
+            <div class="textLeft">Category: Homework</div>
             <div class="textRight">Due: 11/16/2022</div>
             <div class="textLeft hidden studentNames" id="studentNamesHw1">
                 <p>Stavros Halkias<br class="line" />Tony Soprano<br class="line"/>Saul Goodman<br class="line"/>John Snow<br class="line"/>Rhaenyra Targaryen<br class="line"/>Elton John<br class="line"/>Dunkin Idaho<br class="line"/>Quincy Adams<br class="line"/>Harry Potter<br class="line"/>Bruce Wayne</p>
             </div><!--2 blank divs so the grid doesnt get messed up, names on the left and grades on the right-->
             <div class="textRight hidden studentGrades" id="hw1Grades">
-                <br /><input type="text" class="gradeNumerator" value="20">/30<br class="line"/><input type="text" class="gradeNumerator" value="20">/30<br class="line"/><input type="text" class="gradeNumerator" value="20">/30<br class="line"/>
-                <input type="text" class="gradeNumerator" value="20">/30<br class="line" /><input type="text" class="gradeNumerator" value="20">/30<br class="line"/><input type="text" class="gradeNumerator" value="20">/30<br class="line"/>
-                <input type="text" class="gradeNumerator" value="20">/30<br class="line"/><input type="text" class="gradeNumerator" value="20">/30<br class="line"/><input type="text" class="gradeNumerator" value="20">/30<br class="line"/>
-                <input type="text" class="gradeNumerator" value="20">/30<br />
+                <br />
+					<input type="text" id="MHW10" class="gradeNumerator" value="">/100<br class="line"/>
+					<input type="text" id="MHW11" class="gradeNumerator" value="">/100<br class="line"/>
+					<input type="text" id="MHW12" class="gradeNumerator" value="">/100<br class="line"/>
+					<input type="text" id="MHW13" class="gradeNumerator" value="">/100<br class="line"/>
+					<input type="text" id="MHW14" class="gradeNumerator" value="">/100<br class="line"/>
+					<input type="text" id="MHW15" class="gradeNumerator" value="">/100<br class="line"/>
+					<input type="text" id="MHW16" class="gradeNumerator" value="">/100<br class="line"/>
+					<input type="text" id="MHW17" class="gradeNumerator" value="">/100<br class="line"/>
+					<input type="text" id="MHW18" class="gradeNumerator" value="">/100<br class="line"/>
+					<input type="text" id="MHW19" class="gradeNumerator" value="">/100<br />
             </div>
             <div id="hw1Invis" class="hidden"></div>
             <div id="hw1SaveChangesDiv" class="textRight hidden">
-                <button type="button" id="hw1SaveChanges" class="saveChanges">Save changes </button>
+            </div>
+			
+			<div class="textLeft">Homework 2</div>
+            <div class="textRight">
+                <button type="button" id="hw2" class="editGrades">Edit grades </button>
+            </div>
+            <div class="textLeft">Category: Homework</div>
+            <div class="textRight">Due: 11/23/2022</div>
+            <div class="textLeft hidden studentNames" id="studentNamesHw2">
+                <p>Stavros Halkias<br class="line" />Tony Soprano<br class="line"/>Saul Goodman<br class="line"/>John Snow<br class="line"/>Rhaenyra Targaryen<br class="line"/>Elton John<br class="line"/>Dunkin Idaho<br class="line"/>Quincy Adams<br class="line"/>Harry Potter<br class="line"/>Bruce Wayne</p>
+            </div><!--2 blank divs so the grid doesnt get messed up, names on the left and grades on the right-->
+            <div class="textRight hidden studentGrades" id="hw2Grades">
+                <br />
+					<input type="text" id="MHW20" class="gradeNumerator" value="">/100<br class="line"/>
+					<input type="text" id="MHW21" class="gradeNumerator" value="">/100<br class="line"/>
+					<input type="text" id="MHW22" class="gradeNumerator" value="">/100<br class="line"/>
+					<input type="text" id="MHW23" class="gradeNumerator" value="">/100<br class="line"/>
+					<input type="text" id="MHW24" class="gradeNumerator" value="">/100<br class="line"/>
+					<input type="text" id="MHW25" class="gradeNumerator" value="">/100<br class="line"/>
+					<input type="text" id="MHW26" class="gradeNumerator" value="">/100<br class="line"/>
+					<input type="text" id="MHW27" class="gradeNumerator" value="">/100<br class="line"/>
+					<input type="text" id="MHW28" class="gradeNumerator" value="">/100<br class="line"/>
+					<input type="text" id="MHW29" class="gradeNumerator" value="">/100<br />
+            </div>
+            <div id="hw2Invis" class="hidden"></div>
+            <div id="hw2SaveChangesDiv" class="textRight hidden">
             </div>
 
             <div class="textLeft">Quiz 1</div>
             <div class="textRight">
                 <button type="button" id="q1" class="editGrades">Edit grades </button>
             </div>
-            <div class="textLeft">Type: Quiz</div>
+            <div class="textLeft">Category: Quiz</div>
             <div class="textRight">Due: 11/16/2022</div>
             <div class="textLeft hidden studentNames" id="studentNamesQ1">
                 <p>Stavros Halkias<br class="line" />Tony Soprano<br class="line" />Saul Goodman<br class="line" />John Snow<br class="line" />Rhenera Targeareon<br class="line" />Elton John<br class="line" />Dunkin Idaho<br class="line" />Quincy Adams<br class="line" />Harry Potter<br class="line" />Bruce Wayne</p>
             </div>
             <div class="textRight hidden studentGrades" id="q1Grades">
-                <br /><input type="text" class="gradeNumerator" value="-">/100<br class="line" /><input type="text" class="gradeNumerator" value="-">/100<br class="line" /><input type="text" class="gradeNumerator" value="-">/100<br class="line" />
-                <input type="text" class="gradeNumerator" value="-">/100<br class="line" /><input type="text" class="gradeNumerator" value="-">/100<br class="line" /><input type="text" class="gradeNumerator" value="-">/100<br class="line" />
-                <input type="text" class="gradeNumerator" value="-">/100<br class="line" /><input type="text" class="gradeNumerator" value="-">/100<br class="line" /><input type="text" class="gradeNumerator" value="-">/100<br class="line" />
-                <input type="text" class="gradeNumerator" value="-">/100<br />
+                <br />
+					<input type="text" id="MQ10" class="gradeNumerator" value="-">/100<br class="line" />
+					<input type="text" id="MQ11" class="gradeNumerator" value="-">/100<br class="line" />
+					<input type="text" id="MQ12" class="gradeNumerator" value="-">/100<br class="line" />
+					<input type="text" id="MQ13" class="gradeNumerator" value="-">/100<br class="line" />
+					<input type="text" id="MQ14" class="gradeNumerator" value="-">/100<br class="line" />
+					<input type="text" id="MQ15" class="gradeNumerator" value="-">/100<br class="line" />
+					<input type="text" id="MQ16" class="gradeNumerator" value="-">/100<br class="line" />
+					<input type="text" id="MQ17" class="gradeNumerator" value="-">/100<br class="line" />
+					<input type="text" id="MQ18" class="gradeNumerator" value="-">/100<br class="line" />
+					<input type="text" id="MQ19" class="gradeNumerator" value="-">/100<br />
             </div>
             <div id="q1Invis" class="hidden"></div>
             <div id="q1SaveChangesDiv" class="textRight hidden">
-                <button type="button" class="saveChanges">Save changes </button>
+            </div>
+			
+			<div class="textLeft">Exam 1</div>
+            <div class="textRight">
+                <button type="button" id="e1" class="editGrades">Edit grades </button>
+            </div>
+            <div class="textLeft">Category: Quiz</div>
+            <div class="textRight">Due: 11/16/2022</div>
+            <div class="textLeft hidden studentNames" id="studentNamesE1">
+                <p>Stavros Halkias<br class="line" />Tony Soprano<br class="line" />Saul Goodman<br class="line" />John Snow<br class="line" />Rhenera Targeareon<br class="line" />Elton John<br class="line" />Dunkin Idaho<br class="line" />Quincy Adams<br class="line" />Harry Potter<br class="line" />Bruce Wayne</p>
+            </div>
+            <div class="textRight hidden studentGrades" id="e1Grades">
+                <br />
+					<input type="text" id="ME10" class="gradeNumerator" value="-">/100<br class="line" />
+					<input type="text" id="ME11" class="gradeNumerator" value="-">/100<br class="line" />
+					<input type="text" id="ME12" class="gradeNumerator" value="-">/100<br class="line" />
+					<input type="text" id="ME13" class="gradeNumerator" value="-">/100<br class="line" />
+					<input type="text" id="ME14" class="gradeNumerator" value="-">/100<br class="line" />
+					<input type="text" id="ME15" class="gradeNumerator" value="-">/100<br class="line" />
+					<input type="text" id="ME16" class="gradeNumerator" value="-">/100<br class="line" />
+					<input type="text" id="ME17" class="gradeNumerator" value="-">/100<br class="line" />
+					<input type="text" id="ME18" class="gradeNumerator" value="-">/100<br class="line" />
+					<input type="text" id="ME19" class="gradeNumerator" value="-">/100<br />
+            </div>
+            <div id="e1Invis" class="hidden"></div>
+            <div id="e1SaveChangesDiv" class="textRight hidden">
             </div>
         </div>
     </div>
@@ -76,55 +168,47 @@
             </a>
         </div>
         <div id="classStatisticsDiv" class="menuItem">
-            <a id="mailto_field" href=""><button type="button" id="classStatisticsText" class="menuButton" href="">Publish class statistics </button></a>        
-            <div id="mailText"> Enter your email: <input id="mailto_email" type="text"/></div>
+            <a id="mailto_field" href=""><button type="button" id="classStatisticsText" class="menuButton" href="">Publish class statistics </button></a>
+            <div> Enter your email: <input id="mailto_email" type="text"/></div>
             <div>(Full implementation would send statistics to Blackboard mail list)</div>
         </div>
         <div id="adjustLetterScalingDiv" class="menuItem">
-            <div><button type="button" class="menuButton">Adjust letter scaling </button></div>
+            <div><button type="button" id="adjustLetterScalingText" class="menuButton">Adjust letter scaling </button></div>
             <div id="adjustLetterScalingMenu">
-                <div class="textLeft lineupText" id="letters">
-                    <p>
-                        A<br class="space" />
-                        B<br class="space" />
-                        C<br class="space" />
-                        D<br class="space" />
-                    </p>
-                </div><!--2 blank divs so the grid doesnt get messed up, names on the left and grades on the right-->
-                <div class="textRight lineupInput">
-                    <br /><input id="Abreak" type="text" class="gradeNumerator" value="90">
-                    <br /><input id="Bbreak" type="text" class="gradeNumerator" value="80">
-                    <br /><input id="Cbreak" type="text" class="gradeNumerator" value="70">
-                    <br /><input id="Dbreak" type="text" class="gradeNumerator" value="60"><br />
-                </div>
-                <div></div>
-                <div class="saveChangesButton textRight">
-                    <button type="button" id="adjustLetterScalingText">Save changes </button>
-                </div>
-            </div>
+				<div class="textLeft" id="letters">
+				<p>
+					A<br />
+					B<br />
+					C<br />
+					D<br />
+				</p>
+				</div><!--2 blank divs so the grid doesnt get messed up, names on the left and grades on the right-->
+				<div class="textRight">
+					<br /><input id="Abreak" type="text" class="gradeNumerator" value="90">
+					<br /><input id="Bbreak" type="text" class="gradeNumerator" value="80">
+					<br /><input id="Cbreak" type="text" class="gradeNumerator" value="70">
+					<br /><input id="Dbreak" type="text" class="gradeNumerator" value="60"><br />
+				</div>
+			</div>
         </div>
         <div id="categoriesDiv" class="menuItem">
-            <div><button type="button" class="menuButton">Adjust assignment categories </button></div>
+            <div><button type="button" id="categoriesText" class="menuButton">Adjust assignment categories </button></div>
             <div id="categoriesMenu">
-                <div class="textLeft lineupText" id="categories">
-                    <p>
-                        Classwork<br class="space" />
-                        Homework<br class="space" />
-                        Quiz<br />
-                        Exam
-                    </p>
-                </div><!--2 blank divs so the grid doesnt get messed up, names on the left and grades on the right-->
-                <div class="textRight lineupInput" id="category_weights">
-                    <br /><input type="text" id="cat1" class="gradeNumerator" value="10">
-                    <br /><input type="text" id="cat2" class="gradeNumerator" value="25">
-                    <br /><input type="text" id="cat3" class="gradeNumerator" value="25">
-                    <br /><input type="text" id="cat4" class="gradeNumerator" value="40"><br />
-                </div>
-                <div></div>
-                <div class="saveChangesButton textRight">
-                    <button type="button" id="categoriesText">Save changes </button>
-                </div>
-            </div>
+				<div class="textLeft" id="categories">
+				<p>
+					Classwork<br />
+					Homework<br />
+					Quiz<br />
+					Exam
+				</p>
+				</div><!--2 blank divs so the grid doesnt get messed up, names on the left and grades on the right-->
+				<div class="textRight" id="category_weights">
+					<br /><input type="text" id="cat1" class="gradeNumerator" value="10">
+					<br /><input type="text" id="cat2" class="gradeNumerator" value="25">
+					<br /><input type="text" id="cat3" class="gradeNumerator" value="25">
+					<br /><input type="text" id="cat4" class="gradeNumerator" value="40"><br />
+				</div>
+			</div>
         </div>
 
 
@@ -134,6 +218,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="../js/mathProfessorScripts.js"></script>
     <script src="../js/course.js"></script>
+	<script src="../js/shared.js"></script>
 
 
 
