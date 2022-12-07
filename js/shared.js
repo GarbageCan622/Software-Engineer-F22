@@ -27,12 +27,12 @@ if (localStorage.getItem('MQuiz1') == null) {
 		localStorage.setItem('ECats_num', JSON.stringify(ECats_num));
 	}
 	
-	var ESIDs = [1,2,3];		//English course student ID's
+	var ESIDs = [1,2,3,4,5,6,7,8,9,10];		//English course student ID's
 	if (localStorage.getItem('ESIDs') == null) {
 		localStorage.setItem('ESIDs', JSON.stringify(ESIDs));
 	}
 	
-	var EHW1 = [88, 90, 75, 88.88888, 100, 100, 83, 87, 70, 60];	//HW1 grades (corresponds to SIDs)	
+	var EHW1 = [88, 90, 75, 88, 100, 100, 83, 87, 70, 60];	//HW1 grades (corresponds to SIDs)	
 	if (localStorage.getItem('EHW1') == null) {
 		localStorage.setItem('EHW1', JSON.stringify(EHW1));
 	}
@@ -47,9 +47,9 @@ if (localStorage.getItem('MQuiz1') == null) {
 		localStorage.setItem('EP1', JSON.stringify(EP1));
 	}
 	
-	var EPF = [88, 87.5, 91, 95, 95, 85, 72, 74, 83, 89];		//Final paper grades
-	if (localStorage.getItem('EPF') == null) {
-		localStorage.setItem('EPF', JSON.stringify(EPF));
+	var EFP = [88, 87.5, 91, 95, 95, 85, 72, 74, 83, 89];		//Final paper grades
+	if (localStorage.getItem('EFP') == null) {
+		localStorage.setItem('EFP', JSON.stringify(EFP));
 	}
 }
 
@@ -73,22 +73,17 @@ if (localStorage.getItem('MQuiz1') == null) {
 		localStorage.setItem('MSIDs', JSON.stringify(MSIDs));
 	}
 	
-	var CW1 = [100,100,100,100,100,90,100,80,90,90];		//Classwork 1
-	if (localStorage.getItem('CW1') == null) {
-		localStorage.setItem('CW1', JSON.stringify(CW1));
+	var MCW1 = [100,100,100,100,100,90,100,80,90,90];		//Classwork 1
+	if (localStorage.getItem('MCW1') == null) {
+		localStorage.setItem('MCW1', JSON.stringify(MCW1));
 	}
 	
-	var CW2 = ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'];	//Classwork 2
-	if (localStorage.getItem('CW2') == null) {
-		localStorage.setItem('CW2', JSON.stringify(CW2));
-	}
-	
-	var MHW1 = [100, 95, 92, 85, 90, 92, 82, 75, 0, 60];		//Homework 1
+	var MHW1 = [100, 95, 80.25, 92.5, 90, 90, 80, 85, 0, 60];		//Homework 1
 	if (localStorage.getItem('MHW1') == null) {
 		localStorage.setItem('MHW1', JSON.stringify(MHW1));
 	}
 	
-	var MHW2 = [85, 88, 76, 90, 85, 85, 82, 73, 90, 79];		//Homework 2
+	var MHW2 = [85, 85, 75, 95.5, 81, 78, 84, 68, 72, 80];		//Homework 2
 	if (localStorage.getItem('MHW2') == null) {
 		localStorage.setItem('MHW2', JSON.stringify(MHW2));
 	}
@@ -102,4 +97,19 @@ if (localStorage.getItem('MQuiz1') == null) {
 	if (localStorage.getItem('ME1') == null) {
 		localStorage.setItem('ME1', JSON.stringify(ME1));
 	}	
+}
+
+
+/*Assignment Test*/ {
+	var assignment = ["Homework 1", "Homework", "11/16/2022", 30, true];
+	if (localStorage.getItem('ass1') == null) {
+		localStorage.setItem('ass1', JSON.stringify(assignment));
+	}
+}
+
+/*Course Test*/ {
+	var course = ["MATH.1030", 3, MCats_names, MLS, MCats_num];
+	if (localStorage.getItem('math') == null) {
+		localStorage.setItem('math', JSON.stringify(course));
+	}
 }

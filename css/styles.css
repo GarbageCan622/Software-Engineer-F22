@@ -356,24 +356,6 @@ a {
     display: block;
 }
 
-.space {
-    padding-bottom: 3px;
-    content: "";
-    display: block;
-}
-
     .studentNames p{
         padding-top:2px;
     }
-
-    .lineupText{
-        font-size:20px;
-    }
-
-    .lineupInput input{
-        margin-bottom:5px;
-    }
-
-#mailText {
-    padding-top: 10px;
-}

@@ -116,14 +116,6 @@ function standard_deviation() {
     return Math.round((Math.sqrt(sum / (temp.length - 1))) * 100) / 100;
 }
 
-function calc_overall() {
-    //Multiply all categories by their weight and add together
-        //Weights must add to 100 for formula above to work
-    var output = 79;
-    document.getElementById('class_avg_text').innerHTML = output;
-	return output;
-}
-
 function to_letter_grade(x) {
 	let out = 'F';
 	if(x >= letter_scale[0]) {
@@ -139,8 +131,4 @@ function to_letter_grade(x) {
 		out = 'D';
 	}
 	document.getElementById('class_letter_text').innerHTML = out;
-}
-
-function calc_category_grade() {
-    //Return % average of all grades in category
 }
