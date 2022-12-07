@@ -1,6 +1,23 @@
+// local storage retrieval
+let MCats_names = JSON.parse(localStorage.getItem("MCats_names"));
+let MCats_num = JSON.parse(localStorage.getItem("MCats_num"));
+let MLS = JSON.parse(localStorage.getItem("MLS"));
+let MSIDs = JSON.parse(localStorage.getItem("MSIDs"));
+let CW1 = JSON.parse(localStorage.getItem("CW1"));
+let CW2 = JSON.parse(localStorage.getItem("CW2"));
+let MHW1 = JSON.parse(localStorage.getItem("MHW1"));
+let MHW2 = JSON.parse(localStorage.getItem("MHW2"));
+let MQ1 = JSON.parse(localStorage.getItem("MQ1"));
+let ME1 = JSON.parse(localStorage.getItem("ME1"));
+
+
+// localstorage unaffected by changes they changed here.
+MCats_names =["classwork", "homework", "quiz", "exam"];
+MCats_num = [15,20,30,40];
+//MSIDs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 // fixes a number to a set number of decimal places
-var fix = function(n, d) { return Number(n.toFixed(d)); }
+function fix(n, d) { return Number(n.toFixed(d)); }
 
 // returns weighted sum, default weights are 1.
 var sum = function(A, weights = []) {
@@ -25,8 +42,6 @@ function countSort(A, radix) {
     return A;
 }
 //Variables
-var name;
-var credits;
 const letters = ["A", "B", "C", "D", "F"];
 // Maps
 const overall_grades = new Map();
@@ -44,10 +59,10 @@ const writing_assignments = new Map();
     overall_grades[3] = 86.5;
     overall_grades[4] = 82.3;
 
-    category_weights["Homework"] = 20;
-    category_weights["Quiz"] = 15;
-    category_weights["Exam"] =  40;
-    category_weights["Writing Assignments"] = 25;
+    category_weights["classwork"] = 20;
+    category_weights["homework"] = 15;
+    category_weights["quiz"] =  40;
+    category_weights["exam"] = 25;
 
     homework_grades[1] = 76;
     homework_grades[2] = 77;
@@ -66,7 +81,7 @@ const writing_assignments = new Map();
 
     writing_assignments[1] = 70;
 
-    cat_temp["Homework"] = homework_grades;
+    cat_temp["classwork"] = homework_grades;
     cat_temp["Quiz"] = quiz_grades;
     cat_temp["Exam"] = exam_grades;
     cat_temp["Writing Assignments"] = writing_assignments;
@@ -74,9 +89,6 @@ const writing_assignments = new Map();
 
 //Lists
 const assignment_categories = ["Homework", "Quiz", "Exam", "Writing Assignments"];
-const student_ids = [1, 2, 3, 4];   //May not implement
-const assignments = [];
-const letter_scale = [90, 80, 70, 60, 0];    //Corresponds to letter grades. A, B, C, D, F
 const category_grades = [homework_grades, quiz_grades, exam_grades, writing_assignments];
 
 // IMLPEMENT USER CLASS IN HERE TOO
@@ -90,33 +102,27 @@ class Student {
 }
 
 class Assignment {
-    constructor(name = "", category = "", dueDate = "", points = 100) {
+    //constructor(name = "", category = "", dueDate = "", points = 100) {
+    constructor(name , category) {
         this.name = name;
-        this.dueDate = (dueDate == false) ? (new Date()).toDateString() : (new Date(dueDate)).toDateString();
+        //this.dueDate = (dueDate == false) ? (new Date()).toDateString() : (new Date(dueDate)).toDateString();
         this.category = category;
-        this.points = points;
+        this.points = 100;
         this.isPublished = false;
-        this.submitDate = new Map();
-        this.grade = new Map();
-        for (let sid of student_ids) { 
-            this.submitDate[sid] = (new Date()).toDateString();
-            this.grade[sid] = undefined;
-        }
-
-
+        this.grade = [-493];
     }
 
     // generates the HTML code to display an assignment properly based on the provided grid structure
     toHTMLString(SID) {
-        let grade = fix(100 * (this.grade[SID] / this.points), 3);
-        if (weightOn) { grade = fix((grade * math.categoryWeights[this.category] / 100), 3); } // RWALLY BAD FIX
-        str = "";
+        let str = "";
+        let grade = this.grade[SID];
+        if (weightOn) { grade = grade * math.categoryWeights[this.category] / 100; } // RWALLY BAD FIX
         str += '<div class="textLeft">' + this.name + '</div>';
         str += '<div class="textRight"><input type = "text" class="gradeNumerator" value="' + this.grade[SID] + '"readonly>/' + this.points + '</div>';
         str += '<div class="textLeft">Category: ' + this.category + '</div>';
         str += '<div class="textRight">Grade: ' + grade + '</div>';
-        str += '<div class="textLeft">Due Date: ' + this.dueDate + '</div>';
-        str += '<div class="textRight">Submitted: ' + this.submitDate[SID] + '</div>';
+        //str += '<div class="textLeft">Due Date: ' + this.dueDate + '</div>';
+        //str += '<div class="textRight">Submitted: ' + this.submitDate[SID] + '</div>';
         return str;
     }
 
@@ -125,21 +131,24 @@ class Assignment {
         let str = "";
         str += this.name +",";
         str += this.category + ",";
-        str += (this.dueDate) + ",";
+        //str += (this.dueDate) + ",";
         str += this.points + ",";
-        str += (this.submitDate[SID]) + ",";
+        //str += (this.submitDate[SID]) + ",";
         str += (this.grade[SID]) + ",";
-        str += (this.grade[SID] / this.points) * 100 + "%\n";
+        str += (this.grade[SID] / this.points * 100) + "%\n";
         return str;
     }
 }
 class Course {
-    constructor(name = "", credits = 0, assignmentCategories = [], scale = [], weights = {}) {
+    constructor(name = "", assignmentCategories = [], scale = [], weights = []) {
         this.name = name;
-        this.credits = credits;
+        this.credits = 3;
         this.categories = assignmentCategories;
         this.letterScale = scale;
-        this.categoryWeights = weights; 
+
+        // construct map from list
+        this.categoryWeights = new Map();
+        for (let i = 0; i < this.categories.length; i++) { this.categoryWeights[this.categories[i]] = weights[i]; }
 
 
 
@@ -147,16 +156,44 @@ class Course {
         this.assignments = [];
 
         // overall grades, category grades
-        this.overallGrades = new Map();
-        this.categoryGrades = new Map;
-        for (let cat of this.categories) { this.categoryGrades[cat] = new Map(); }
+        this.overallGrades = {};
+        this.categoryGrades = new Map();
+        for (let cat of this.categories) { this.categoryGrades.set(cat, new Array(1).fill(-493)); }
     }
     toHTMLString(sid) {
-        let grade = this.overallGrades[sid], letterGrade = toLetter(grade, this.letterScale, letters);
+        let grade = this.overallGrades[sid];
+        let letterGrade = toLetterGrade(grade, this.letterScale, letters);
         let head = '<div id="assignHead"><h2><u>My Grades</u></h2><div id="blank"></div>';
         head += '<div class="textLeft"><h3>Total:</h3></div><div class="textRight"><h3>' + grade + ': ' + letterGrade + '</h3></div></div>';
         let str = head + genAssignments(this, sid);
         return str;
+    }
+    setAssignment(name, sids, grades, category) {
+        let ass = new Assignment(name, category);
+        // add student grades to assignment
+        for (let i = 0; i < grades.length; i++) {
+            ass.isPublished = !(grades[i] === '-');
+            ass.grade.push(grades[i]);
+        }
+        // add assignment to course
+        this.assignments.push(ass);
+
+    }
+    getCategoryGrades(sids) {
+
+    }
+    getOverallGrades(sids) {
+        let i, j, sum, sums = new Map();
+        for (i = 0; i < sids.length; i++) { sums[sids[i]] = 0; }
+        for (i= 0; i < sids.length; i++) {
+            sum = 0;
+            for (j = 0; j < this.categories.length; j++) {
+                let cat = this.categories[j];
+                sum += (this.categoryWeights[cat] * this.categoryGrades[cat][sids[i]]);
+            }
+            sum /= 100;
+            this.overallGrades[sids[i]] = sum;
+        }
     }
 
 }
@@ -164,45 +201,22 @@ class Course {
 
 // class instatiations
 
+
 // course(s)
-var math = new Course("math", 3, assignment_categories, letter_scale, category_weights);
-math.categoryGrades = cat_temp;
-math.overallGrades = overall_grades;
+var math = new Course("math", MCats_names, MLS, MCats_num);
 
 // student
-var sandra = new Student("sandra", 1, 3.7);
+var sandra = new Student("stavros", 1, 3.7);
 
-// assignments in courses
-ass = new Assignment("Homework 1", "Homework", "11/16/2022", 30); ass.isPublished = true;
-ass.grade[sandra.SID] = 20; ass.submitDate[sandra.SID] = (new Date("11/14/2022")).toDateString();
-math.assignments.push(ass);
-
-ass = new Assignment("Quiz 1", "Quiz", "11/16/2022", 100); ass.isPublished = true;
-ass.grade[sandra.SID] = 93.3; ass.submitDate[sandra.SID] = (new Date("11/14/2022")).toDateString();
-math.assignments.push(ass);
-
-ass = new Assignment("Term paper", "Writing Assignments", "11/23/2022", 200); ass.isPublished = true;
-ass.grade[sandra.SID] = 140; ass.submitDate[sandra.SID] = (new Date("11/23/2022")).toDateString();
-math.assignments.push(ass);
-
-ass = new Assignment("Homework 2", "Homework", 100); ass.isPublished = false;
-// submission dates/grades generated upon retrieval if false
-math.assignments.push(ass);
-
-ass = new Assignment("Homework 3", "Homework"); ass.isPublished = false;
-math.assignments.push(ass);
-
-ass = new Assignment("Homework 4", "Homework"); ass.isPublished = false;
-math.assignments.push(ass);
-
-ass = new Assignment("Homework 5", "Homework"); ass.isPublished = false;
-math.assignments.push(ass);
-
-ass = new Assignment("Homework 6", "Homework"); ass.isPublished = false;
-math.assignments.push(ass);
-
-ass = new Assignment("Homework 7", "Homework"); ass.isPublished = false;
-math.assignments.push(ass);
+math.setAssignment("Classwork 1", MSIDs, CW1, "classwork");
+math.setAssignment("Classwork 2", MSIDs, CW2, "classwork");
+math.setAssignment("Homework 1", MSIDs, MHW1, "homework");
+math.setAssignment("Homework 2", MSIDs, MHW2, "homework");
+math.setAssignment("Quiz 1", MSIDs, MQ1, "quiz");
+math.setAssignment("Exam 1", MSIDs, ME1, "exam");
+math.getCategoryGrades(MSIDs);
+//math.getOverallGrades(MSIDs);
+console.log(math.categoryGrades['quiz']);
 
 // further lists
 let courses = [math];
@@ -245,18 +259,13 @@ var gradeConvert = function(letterGrade) {
 }
 
 // returns letter grade given the scale, letters, and an overall grade
-function toLetter(grade, ranges, letters) {
-    let letter = "",  max = 1.0;
+function toLetterGrade(grade, ranges, letters) {
+    let letter = "F"; max = 100;
     for (let i = 0; i < ranges.length; i++) {
-        if (grade >= ranges[i] && grade < max) { letter = letters[i]; break; }
+        if (grade < max && grade >= ranges[i]) { letter = letters[i];}
         max = ranges[i];
     }
     return letter;
-}
-
-var toLetterGrade = function(grade, ranges, isStudent) {
-    let letters = (isStudent == true) ? ["A", "B", "C", "D", "F"] : ["A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "F"];
-    return toLetter(grade, ranges, letters);
 }
 
 // calc gpa function
@@ -264,11 +273,11 @@ Student.prototype.calcGPA = function(courses) {
     // weighted average of a student's overall grades
     let totalCredits = 0, weightSum = 0;
     for (let i = 0; i < courses.length; i++) {
-        let letterGrade = courses[i].overallGrades[this.SID];
+        let letterGrade = toLetterGrade(courses[i].overallGrades[this.SID], courses[i].letterScale, letters);
         totalCredits += courses[i].credits;
-        weightSum += (courses[i].credits * gradeConvert(toLetterGrade(letterGrade, courses[i].letterScale, true)));
+        weightSum += (courses[i].credits * gradeConvert(letterGrade));
     }
-    let ret = fix(weightSum/totalCredits, 4);
+    let ret = weightSum/totalCredits;
     return ret;
 }
 // selfscaling just returns a STRING of an updated scale so that it is not permanent
@@ -276,7 +285,8 @@ Student.prototype.adjustSelfScaling = function(course, scale) {
 
     // get the grades!
     let overallGrade = course.overallGrades[this.SID];
-    let adjustedLetterGrade = toLetter(overallGrade, scale, letters);
+    let adjustedLetterGrade = toLetterGrade(overallGrade, scale, letters);
+    console.log(scale);
 
     // adjusted scale string
     let str = "";
@@ -289,10 +299,7 @@ Student.prototype.adjustSelfScaling = function(course, scale) {
 // calculate from letter grade, given an assignment
 
 var getMinGrade = function(scale, letter) {
-    // assumes full letter grade scale.
-    // also assumes letter WILL be found.
-    let grades = ["A", "B", "C", "D", "F"];
-    return fix(scale[grades.indexOf(letter)], 3);
+    return fix(scale[letters.indexOf(letter)], 3);
 }
 Student.prototype.calculateGradeNeededAssignment = function(course, cat, letter) {
     // convert letter grade to numeric form, minimum 
@@ -333,7 +340,7 @@ Student.prototype.calculateGradeNeededCategory = function(course, cat, letter) {
 // mock grade stuff.
 Student.prototype.enterMockGrade = function(course, assCat, grade) {
     // 1. get grades and categories
-    let catGrades = new Array(); weights = new Array();
+    let catGrades = []; weights = [];
     for (let i = 0; i < course.categories.length; i++) {
         let cat = course.categories[i];
         catGrades.push(course.categoryGrades[cat][this.SID]);
@@ -353,7 +360,7 @@ Student.prototype.enterMockGrade = function(course, assCat, grade) {
     // update overall grade
     // buggy
     let new_grade = sum(catGrades, weights);
-    let letter_grade = toLetter(new_grade, course.letterScale, letters);
+    let letter_grade = toLetterGrade(new_grade, course.letterScale, letters);
 
     //mockDiv.innerHTML += newVal + " : " + new_grade + " : " + letter_grade;
 
@@ -596,7 +603,8 @@ let exportDiv = document.getElementById('exportMenu');
 function generateCSV(course, sid) {
     // get category titles for assignments
     let str = "";
-    str += "name,category,due date,total points,submitted,points,grade\n";
+    //str += "name,category,due date,total points,submitted,points,grade\n";
+    str += "name,category,total points,points,grade\n";
     for (let i = 0; i < course.assignments.length; i++) {
         str += course.assignments[i].toString(sid);
     }
@@ -691,7 +699,8 @@ let bazval= "";
 function baz() {
     // get the numbers entered to form a scale list
     let inputs = document.getElementById("selfScale"), ranges = [];
-    for (let i = 0; i < letters.length; i++) ranges.push(document.getElementById("selfScale" + letters[i]).value);
+    for (let i = 0; i < letters.length - 1; i++) ranges.push(document.getElementById("selfScale" + letters[i]).value);
+    ranges.push(0);
 
     // compute the new letter grade
     bazval = sandra.adjustSelfScaling(math, ranges);
@@ -703,7 +712,7 @@ function expandAdjust() {
     let divName = "selfScale";
     let str = ': <input type="text" id="' + divName;
     adjustDiv.innerHTML += '<form id="' + divName +'">';
-    for (let letter of letters) { adjustDiv.innerHTML += letter + str + letter +'">' + '<br/>'; }
+    for (let i = 0; i < letters.length - 1; i++) { adjustDiv.innerHTML += letters[i] + str + letters[i] +'">' + '<br/>'; }
 
     // calc new letter grade button
     adjustDiv.innerHTML += '<button type="button" id="scale" onclick="baz()">Calculate letter grade</button><br/>';
@@ -739,3 +748,6 @@ if (document.getElementById('EQuiz1') != null) {
     document.getElementById('EQuiz1').value = localStorage.getItem('EQuiz1');
 }
 */
+
+console.log(math.categories);
+console.log(math.categoryWeights);
