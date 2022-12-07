@@ -162,17 +162,33 @@ $(function () {
 	var credits = 3;
 	var letter_scale = [];
 	var weights = [];
+	var assignments = ['MCW1', 'MHW1', 'MHW2', 'MQ1', 'ME1'];
+	var assignments_names = new Map();
+	{
+		assignments_names.set('MCW1', 'Classwork 1');
+		assignments_names.set('MHW1', 'Homework 1');
+		assignments_names.set('MHW2', 'Homework 2');
+		assignments_names.set('MQ1', 'Quiz 1');
+		assignments_names.set('ME1', 'Exam 1');
+	}
+	var assignments_cats = new Map();
+	{
+		assignments_cats.set('MCW1', 'Classwork');
+		assignments_cats.set('MHW1', 'Homework');
+		assignments_cats.set('MHW2', 'Homework');
+		assignments_cats.set('MQ1', 'Quiz');
+		assignments_cats.set('ME1', 'Exam');
+	}
+	var students = ['Stavros Halkias', 'Tony Soprano', 'Saul Goodman', 'John Snow', 'Rhaenyra Targaryen', 'Elton John', 'Dunkin Idaho', 'Quincy Adams', 'Harry Potter', 'Bruce Wayne'];
 }
 
 /*Load from local storage*/ {
 	function loadFromLocal() {	//Calls functions that load from local storage
 		load_letter_scale();
 		load_category_weights();
-		load_assignment_grades('MCW1');
-		load_assignment_grades('MHW1');
-		load_assignment_grades('MHW2');
-		load_assignment_grades('MQ1');
-		load_assignment_grades('ME1');
+		for (let i = 0; i < assignments.length; i++) {
+			load_assignment_grades(assignments[i]);
+		}
 	}
 }
 
@@ -364,4 +380,94 @@ function calc_category(name) {		//name is local storage key w/o any numbers (ex.
 
 		return Math.round((Math.sqrt(sum / (temp.length - 1))) * 100) / 100;
 	}
+}
+
+/*Export Menu*/ {
+	// string form of an assignment for a student (comma separated)
+    function toString(name) {
+		grades = JSON.parse(localStorage.getItem(name));
+        let str = "";
+		for (var i = 0; i < 10; i++) {
+			str += students[i] + ",";
+			str += assignments_names.get(name) +",";
+			str += assignments_cats.get(name) + ",";
+			str += "100,"
+			str += grades[i] + ",";
+			str += grades[i] + "%\n";
+		}
+		
+		
+        //str += this.points + ",";
+        //str += (this.grade[SID]) + ",";
+        //str += (this.grade[SID] / this.points * 100) + "%\n";
+        return str;
+    }
+	
+	// string form of an assignment for a student (Formatted for PDF)
+    function toStringPDF(name) {
+		grades = JSON.parse(localStorage.getItem(name));
+        let str = "";
+        str += "Name: " + assignments_names.get(name) +"\n";
+        str += "Category:" + assignments_cats.get(name) + "\n\n";
+		for(var i = 0; i < 10; i++) {				//Hard coded for 10 students
+			str += "Student: " + students[i] + "\n";
+			str += "Grade: " + grades[i] + "/100\n";
+			str += "Percentage: " + grades[i] + "%\n\n";
+		}
+        return str;
+    }
+	
+	let exportText = document.getElementById('exportText');
+	let exportDiv = document.getElementById('exportMenu');
+
+	function generateCSV() {
+		// get category titles for assignments
+		let str = "";
+		//str += "name,category,due date,total points,submitted,points,grade\n";
+		str += "student name, assignment name,category,total points,points,grade\n";
+		for (let i = 0; i < assignments.length; i++) {
+			str += toString(assignments[i]);
+		}
+		return str;
+	}
+	function csvExport() {
+		var text = generateCSV();
+		var a = document.createElement("a");
+		a.href = window.URL.createObjectURL(new Blob([text], {type: "text/plain"}));
+		a.download = "UserGrades.csv";
+		a.click();
+	}
+	
+	function generatePDF() {
+		let str = ""
+		for (let i = 0; i < assignments.length; i++) {
+			str += toStringPDF(assignments[i]);
+			str += "---------------------------------------------------------------------------------------------";
+			str += "\n\n";
+		}
+		return str;
+	}
+	function pdfExport() {
+		var str = generatePDF();
+		var pdf = new jsPDF({
+			orientation: 'p',
+			unit: 'mm',
+			format: 'letter',
+			putOnlyUsedFonts:true});
+		pdf.text(str, 20, 20);
+		pdf.save('export.pdf');
+	}
+	function expandExport() {
+		exportDiv.innerHTML += '<div id = "csvDiv" class="exportButton"><button type="button" id="exportCSV" class="menuButton" onclick="csvExport()">Export as CSV </button></div>';
+		exportDiv.innerHTML += '<div id = "pdfDiv" class="exportButton"><button type="button" id="exportPDF" class="menuButton" onclick="pdfExport()">Export as PDF </button></div>';
+		exportText.removeEventListener("click", expandExport);
+		exportText.addEventListener("click", collapseExport);
+	}	
+	function collapseExport() {
+		document.getElementById('exportMenu').innerHTML = "";
+		exportText.removeEventListener("click", collapseExport);
+		exportText.addEventListener("click", expandExport);
+	}
+
+	exportText.addEventListener("click", expandExport);
 }

@@ -46,7 +46,6 @@ const cat_temp = new Map();
 //Lists
 const assignment_categories = ["Homework", "Quiz", "Exam"];
 const student_ids = [1, 2, 3, 4];   //May not implement
-const assignments = [];
 const category_grades = [homework_grades, quiz_grades, exam_grades];
 
 
