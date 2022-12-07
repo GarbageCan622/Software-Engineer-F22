@@ -1,4 +1,3 @@
-localStorage.clear();
 /*English Course*/ {
 	var ELS = [90, 80, 70, 60];			//English letter scale
 	if (localStorage.getItem('ELS') == null) {
