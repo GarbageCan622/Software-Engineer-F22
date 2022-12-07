@@ -138,6 +138,17 @@ class Assignment {
         str += (this.grade[SID] / this.points * 100) + "%\n";
         return str;
     }
+	
+	// string form of an assignment for a student (Formatted for PDF)
+    toStringPDF(SID) {
+        let str = "";
+        str += "Name: " + this.name +"\n";
+        str += "Category: " + this.category + "\n";
+        str += "Grade: " + (this.grade[SID]) + "/";
+		str += this.points + "\n";
+        str += "Percentage: " + (this.grade[SID] / this.points * 100) + "%\n\n";
+        return str;
+    }
 }
 class Course {
     constructor(name = "", assignmentCategories = [], scale = [], weights = []) {
@@ -618,7 +629,22 @@ function csvExport() {
     a.download = "UserGrades.csv";
     a.click();
 }
+function generatePDF(course, sid) {
+	let str = ""
+    for (let i = 0; i < course.assignments.length; i++) {
+        str += course.assignments[i].toStringPDF(sid);
+    }
+    return str;
+}
 function pdfExport() {
+	var str = generatePDF(math, sandra.SID);
+	var pdf = new jsPDF({
+		orientation: 'p',
+		unit: 'mm',
+		format: 'letter',
+		putOnlyUsedFonts:true});
+	pdf.text(str, 20, 20);
+	pdf.save('export.pdf');
 }
 function expandExport() {
     exportDiv.innerHTML += '<div id = "csvDiv" class="exportButton"><button type="button" id="exportCSV" class="menuButton" onclick="csvExport()">Export as CSV </button></div>';
