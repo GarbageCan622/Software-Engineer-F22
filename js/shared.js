@@ -47,9 +47,9 @@ if (localStorage.getItem('MQuiz1') == null) {
 		localStorage.setItem('EP1', JSON.stringify(EP1));
 	}
 	
-	var EPF = [88, 87.5, 91, 95, 95, 85, 72, 74, 83, 89];		//Final paper grades
-	if (localStorage.getItem('EPF') == null) {
-		localStorage.setItem('EPF', JSON.stringify(EPF));
+	var EFP = [88, 87.5, 91, 95, 95, 85, 72, 74, 83, 89];		//Final paper grades
+	if (localStorage.getItem('EFP') == null) {
+		localStorage.setItem('EFP', JSON.stringify(EPF));
 	}
 }
 
