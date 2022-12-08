@@ -626,15 +626,15 @@ function csvExport() {
     a.download = "UserGrades.csv";
     a.click();
 }
-function generatePDF(course, sid) {
+function generatePDF() {
 	let str = ""
     for (let i = 0; i < course.assignments.length; i++) {
-        str += course.assignments[i].toStringPDF(sid);
+        str += course.assignments[i].toStringPDF();
     }
     return str;
 }
 function pdfExport() {
-	var str = generatePDF(math, sandra.SID);
+	var str = generatePDF();
 	var pdf = new jsPDF({
 		orientation: 'p',
 		unit: 'mm',
