@@ -137,8 +137,7 @@ class Assignment {
         str += (this.grade[SID] / this.points * 100) + "%\n";
         return str;
     }
-}
-// string form of an assignment for a student (Formatted for PDF)
+    // string form of an assignment for a student (Formatted for PDF)
     toStringPDF(SID) {
         let str = "";
         str += "Name: " + this.name +"\n";
@@ -148,6 +147,8 @@ class Assignment {
         str += "Percentage: " + (this.grade[SID] / this.points * 100) + "%\n\n";
         return str;
     }
+}
+
 class Course {
     constructor(name = "", assignmentCategories = [], scale = [], weights = []) {
         this.name = name;
