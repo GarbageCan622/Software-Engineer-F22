@@ -30,16 +30,15 @@ var sum = function(A, weights = []) {
 // A is some array of assignments
 // radix is some array that holds the 'digits' for the counts, length is the 'base'
 function countSort(A, radix) {
-    let count = (new Array(radix)).fill(0), aux = new Array(A.length), i;
+    let count = (new Array(radix.length)).fill(0), aux = new Array(A.length).fill(0), i;
     for (i = 0; i < A.length; i++) count[radix.indexOf(A[i].category)]++; // counting
-    for (i= 1; i < A.length; i++) count[i] += count[i - 1]; // index mapping
+    for (i= 1; i < radix.length; i++) count[i] = count[i] + count[i - 1]; // index mapping
     for (i= 0; i < A.length; i++) { // placing in auxillary array
         j = radix.indexOf(A[i].category);
-        aux[count[j]] = A[i];
+        aux[count[j]] = JSON.parse(JSON.stringify(A[i]));
         count[j]--;
     }
-    for (i = 0; i < A.length; i++) { A[i] = aux[i];}
-    return A;
+    return JSON.stringify(aux);
 }
 //Variables
 const letters = ["A", "B", "C", "D", "F"];
@@ -116,7 +115,7 @@ class Assignment {
     toHTMLString(SID) {
         let str = "";
         let grade = this.grade[SID];
-        if (weightOn) { grade = grade * math.categoryWeights[this.category] / 100; } // RWALLY BAD FIX
+        if (weightOn && this.isPublished) { grade = grade * math.categoryWeights[this.category] / 100; } // RWALLY BAD FIX
         str += '<div class="textLeft">' + this.name + '</div>';
         str += '<div class="textRight"><input type = "text" class="gradeNumerator" value="' + this.grade[SID] + '"readonly>/' + this.points + '</div>';
         str += '<div class="textLeft">Category: ' + this.category + '</div>';
@@ -136,17 +135,6 @@ class Assignment {
         //str += (this.submitDate[SID]) + ",";
         str += (this.grade[SID]) + ",";
         str += (this.grade[SID] / this.points * 100) + "%\n";
-        return str;
-    }
-	
-	// string form of an assignment for a student (Formatted for PDF)
-    toStringPDF(SID) {
-        let str = "";
-        str += "Name: " + this.name +"\n";
-        str += "Category: " + this.category + "\n";
-        str += "Grade: " + (this.grade[SID]) + "/";
-		str += this.points + "\n";
-        str += "Percentage: " + (this.grade[SID] / this.points * 100) + "%\n\n";
         return str;
     }
 }
@@ -298,7 +286,6 @@ Student.prototype.adjustSelfScaling = function(course, scale) {
     // get the grades!
     let overallGrade = course.overallGrades[this.SID];
     let adjustedLetterGrade = toLetterGrade(overallGrade, scale, letters);
-    console.log(scale);
 
     // adjusted scale string
     let str = "";
@@ -311,20 +298,23 @@ Student.prototype.adjustSelfScaling = function(course, scale) {
 // calculate from letter grade, given an assignment
 
 var getMinGrade = function(scale, letter) {
+    let newScale = scale; scale.push(0);
     return scale[letters.indexOf(letter)];
 }
 Student.prototype.calculateGradeNeededAssignment = function(course, cat, letter) {
     // convert letter grade to numeric form, minimum 
     let grade = getMinGrade(course.letterScale, letter);
 
+
     // get number of assignments in category
-    let sum = 0, nAss = 0;
-    for (let ass of course.assignments) {
-        if (ass.category == cat && ass.isPublished == true) { nAss++; sum += (ass.grade[this.SID]); }
+    let sum = 0, nAss = 1;
+    for (let i = 0; i < course.assignments.length; i++) {
+        if (course.assignments.category == cat && course.assignments.isPublished == true) { nAss++; sum += (course.assignments.grade[this.SID]); }
     }
 
     // ((Σa) + x) / n = g, gn - Σa = x 
-    return (grade * (nAss + 1)) - sum;
+    let needed = (grade * (nAss)) - sum;
+    return needed;
 }
 
 Student.prototype.calculateGradeNeededCategory = function(course, cat, letter) {
@@ -370,15 +360,12 @@ Student.prototype.enterMockGrade = function(course, assCat, grade) {
     catGrades[catDex] = newVal;
 
     // update overall grade
-    // buggy
     let new_grade = sum(catGrades, weights);
     let letter_grade = toLetterGrade(new_grade, course.letterScale, letters);
 
-    //mockDiv.innerHTML += newVal + " : " + new_grade + " : " + letter_grade;
-
     // returns a list, 1st element is numeric category grade, 2nd is numeric overall grade, 3rd is overall letter grade
     return [catGrades[catDex], new_grade, letter_grade];
-    //return -493;
+    //return [-493, -493, -493];
 }
 
 function getAssList(A) {
@@ -406,17 +393,17 @@ let sortDiv = document.getElementById('sortingMenu');//this is the div where we 
 
 function qux() {
     let choice = String(document.getElementById("assSort").value), cats = math.categories; cats.sort();
-
+    let ass = math.assignments;
     // inner sort of assignments (unstable)
     ass = math.assignments.sort(function(a, b){ return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0);});
 
     // outer sort of categories (stable)
-    //ass = countSort(ass, cats);
-    //sortDiv.innerHTML += ass;
+   //ass = JSON.parse(countSort(ass, cats));
+   // theres deep copy problems so not using it
+    math.assignments = ass;
 
     // descending reverses order of elements
-    if (choice == "descending") { ass.reverse(); }
-    math.assignments = ass;
+    if (choice == "descending") { math.assignments.reverse(); }
     document.getElementById("assignments").innerHTML = math.toHTMLString(sandra.SID);
 }
 function expandSort() {
@@ -719,7 +706,6 @@ unweightedButton.classList.add('unselectedWeightButton');
 //the logic here gets repeated for each button on the right menu
 let adjustText = document.getElementById('selfScaleText');//this is the button
 let adjustDiv = document.getElementById('selfScaleMenu');//this is the div where we insert the content
-//it is blank by default in the html, we add the content thru expandSort() and clear the content in collapseSort()
 
 
 let bazval= "";
@@ -755,26 +741,3 @@ function collapseAdjust() {
 }
 
 adjustText.addEventListener("click", expandAdjust);//make sure the button has expandSort() on originally
-
-
-// local storage how-to
-/*
-if (document.getElementById('MHomework1') != null) { //check if id is on this page, really we are checking if we are in mathStudent or englishStudent. If the id is on the page grab the value of the assignment stored in the localStorage and use that as the value
-    document.getElementById('MHomework1').value = localStorage.getItem('MHomework1');
-}
-
-if (document.getElementById('MQuiz1') != null) {
-    document.getElementById('MQuiz1').value = localStorage.getItem('MQuiz1');
-}
-
-if (document.getElementById('EHomework1') != null) {
-    document.getElementById('EHomework1').value = localStorage.getItem('EHomework1');
-}
-
-if (document.getElementById('EQuiz1') != null) {
-    document.getElementById('EQuiz1').value = localStorage.getItem('EQuiz1');
-}
-*/
-
-console.log(math.categories);
-console.log(math.categoryWeights);
