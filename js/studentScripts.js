@@ -139,13 +139,13 @@ class Assignment {
     }
 }
 // string form of an assignment for a student (Formatted for PDF)
-    toStringPDF(SID) {
+    function toStringPDF(name) {
+	grades = JSON.parse(localStorage.getItem(name));
         let str = "";
-        str += "Name: " + this.name +"\n";
-        str += "Category: " + this.category + "\n";
-        str += "Grade: " + (this.grade[SID]) + "/";
-		str += this.points + "\n";
-        str += "Percentage: " + (this.grade[SID] / this.points * 100) + "%\n\n";
+        str += "Name: " + assignments_names.get(name) +"\n";
+        str += "Category:" + assignments_cats.get(name) + "\n\n";
+	str += "Grade: " + grades[i] + "/100\n";
+	str += "Percentage: " + grades[i] + "%\n\n";
         return str;
     }
 class Course {
