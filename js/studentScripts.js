@@ -3,7 +3,7 @@ let MCats_names = JSON.parse(localStorage.getItem("MCats_names"));
 let MCats_num = JSON.parse(localStorage.getItem("MCats_num"));
 let MLS = JSON.parse(localStorage.getItem("MLS"));
 let MSIDs = JSON.parse(localStorage.getItem("MSIDs"));
-let CW1 = JSON.parse(localStorage.getItem("CW1"));
+let CW1 = JSON.parse(localStorage.getItem("MCW1"));
 let CW2 = JSON.parse(localStorage.getItem("CW2"));
 let MHW1 = JSON.parse(localStorage.getItem("MHW1"));
 let MHW2 = JSON.parse(localStorage.getItem("MHW2"));
@@ -616,7 +616,22 @@ function csvExport() {
     a.download = "UserGrades.csv";
     a.click();
 }
+function generatePDF(course, sid) {
+	let str = ""
+    for (let i = 0; i < course.assignments.length; i++) {
+        str += course.assignments[i].toStringPDF(sid);
+    }
+    return str;
+}
 function pdfExport() {
+	var str = generatePDF(math, sandra.SID);
+	var pdf = new jsPDF({
+		orientation: 'p',
+		unit: 'mm',
+		format: 'letter',
+		putOnlyUsedFonts:true});
+	pdf.text(str, 20, 20);
+	pdf.save('export.pdf');
 }
 function expandExport() {
     exportDiv.innerHTML += '<div id = "csvDiv" class="exportButton"><button type="button" id="exportCSV" class="menuButton" onclick="csvExport()">Export as CSV </button></div>';
