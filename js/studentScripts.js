@@ -138,6 +138,16 @@ class Assignment {
         return str;
     }
 }
+// string form of an assignment for a student (Formatted for PDF)
+    toStringPDF(SID) {
+        let str = "";
+        str += "Name: " + this.name +"\n";
+        str += "Category: " + this.category + "\n";
+        str += "Grade: " + (this.grade[SID]) + "/";
+		str += this.points + "\n";
+        str += "Percentage: " + (this.grade[SID] / this.points * 100) + "%\n\n";
+        return str;
+    }
 class Course {
     constructor(name = "", assignmentCategories = [], scale = [], weights = []) {
         this.name = name;
